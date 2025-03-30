@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Dashboard de Gestion de Stock - Système Multiboutiques Alibaba</title>
+    <style type="text/css">
+        .card {
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        
+        .dashboard-header {
+            background: linear-gradient(135deg, #2c3e50, #1a5276);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stats-box {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 5px;
+            color: white;
+            transition: transform 0.3s;
+        }
+        
+        .stats-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stats-box.sales {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+        
+        .stats-box.revenue {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+        }
+        
+        .stats-box.stock {
+            background: linear-gradient(135deg, #d35400, #e67e22);
+        }
+        
+        .stats-box.alerts {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+        }
+        
+        .stats-box.logistics {
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        }
+        
+        .stats-box.suppliers {
+            background: linear-gradient(135deg, #16a085, #1abc9c);
+        }
+        
+        .chart-container {
+            height: 350px;
+            width: 100%;
+        }
+        
+        .kpi-value {
+            font-size: 2.8rem;
+            font-weight: bold;
+        }
+        
+        .kpi-title {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .table-header {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            padding: 10px;
+        }
+        
+        .severity-low {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .severity-medium {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .severity-high {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .boutique-selector {
+            margin-bottom: 1.5rem;
+            background: #f1f3f5;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+        
+        .main-sidebar {
+            background-color: #343a40;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            padding-top: 1.5rem;
+            overflow-y: auto;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            padding: 1.5rem;
+        }
+        
+        .user-avatar {
+            text-align: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .sidebar-menu .ui-menuitem-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+            padding: 0.75rem 1rem;
+        }
+        
+        .sidebar-menu .ui-menuitem-link:hover {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+        }
+        
+        .status-card {
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,.1);
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .status-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .status-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .kpi-card {
+            height: 100%;
+        }
+        
+        .kpi-card h1 {
+            font-size: 2.5em;
+            margin: 0.5em 0;
+        }
+        
+        .dashboard-title {
+            color: #3f51b5;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+        
+        .inventory-chart .ui-chart {
+            height: 350px !important;
+        }
+        
+        .stock-alert-high {
+            background-color: #ffcdd2 !important;
+            color: #c63737 !important;
+        }
+        
+        .stock-alert-medium {
+            background-color: #fff9c4 !important;
+            color: #7d6608 !important;
+        }
+        
+        .text-success {
+            color: #4caf50 !important;
+        }
+        
+        .text-danger {
+            color: #f44336 !important;
+        }
+        
+        .text-warning {
+            color: #ff9800 !important;
+        }
+        
+        .stats-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            color: #3f51b5;
+        }
+        
+        .pointer {
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .main-sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .status-value {
+                font-size: 1.5em;
+            }
+            .kpi-card h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="layout-wrapper">
+        <!-- Sidebar -->
+        <div class="main-sidebar">
+            <div class="user-avatar">
+                <p:graphicImage name="images/avatar.png" width="80" height="80" styleClass="rounded-circle" />
+                <h3>Super Admin</h3>
+                <p>Gestion Multiboutiques</p>
+            </div>
+            
+            <p:menu styleClass="sidebar-menu" style="width: 100%; border: none; background: transparent;">
+                <p:submenu label="Tableau de bord">
+                    <p:menuitem value="Vue globale" icon="pi pi-home" url="#" />
+                    <p:menuitem value="Analytique avancée" icon="pi pi-chart-line" url="#" />
+                    <p:menuitem value="Performance temps réel" icon="pi pi-clock" url="#" />
+                </p:submenu>
+                <p:submenu label="Boutiques">
+                    <p:menuitem value="Liste des boutiques" icon="pi pi-list" url="#" />
+                    <p:menuitem value="Performance par boutique" icon="pi pi-chart-bar" url="#" />
+                    <p:menuitem value="Gestion des régions" icon="pi pi-globe" url="#" />
+                </p:submenu>
+                <p:submenu label="Produits">
+                    <p:menuitem value="Catalogue complet" icon="pi pi-shopping-bag" url="#" />
+                    <p:menuitem value="Gestion des stocks" icon="pi pi-box" url="#" />
+                    <p:menuitem value="Prix et promotions" icon="pi pi-tag" url="#" />
+                    <p:menuitem value="Analyse de la demande" icon="pi pi-chart-pie" url="#" />
+                </p:submenu>
+                <p:submenu label="Commandes">
+                    <p:menuitem value="Nouvelles commandes" icon="pi pi-bell" url="#" />
+                    <p:menuitem value="Historique des ventes" icon="pi pi-calendar" url="#" />
+                    <p:menuitem value="Retours et remboursements" icon="pi pi-reply" url="#" />
+                    <p:menuitem value="Commandes en attente" icon="pi pi-hourglass" url="#" />
+                </p:submenu>
+                <p:submenu label="Logistique">
+                    <p:menuitem value="Gestion des entrepôts" icon="pi pi-building" url="#" />
+                    <p:menuitem value="Suivi des expéditions" icon="pi pi-truck" url="#" />
+                    <p:menuitem value="Fournisseurs" icon="pi pi-users" url="#" />
+                    <p:menuitem value="Optimisation des routes" icon="pi pi-map" url="#" />
+                </p:submenu>
+                <p:submenu label="Finance">
+                    <p:menuitem value="Chiffre d'affaires" icon="pi pi-dollar" url="#" />
+                    <p:menuitem value="Coûts logistiques" icon="pi pi-money-bill" url="#" />
+                    <p:menuitem value="Marges par produit" icon="pi pi-percentage" url="#" />
+                </p:submenu>
+                <p:submenu label="Prévisions">
+                    <p:menuitem value="Prévisions des ventes" icon="pi pi-chart-line" url="#" />
+                    <p:menuitem value="Réapprovisionnement" icon="pi pi-refresh" url="#" />
+                    <p:menuitem value="Tendances saisonnières" icon="pi pi-sun" url="#" />
+                </p:submenu>
+                <p:submenu label="Paramètres">
+                    <p:menuitem value="Utilisateurs et rôles" icon="pi pi-user" url="#" />
+                    <p:menuitem value="Configuration système" icon="pi pi-cog" url="#" />
+                    <p:menuitem value="Alertes personnalisées" icon="pi pi-bell" url="#" />
+                </p:submenu>
+            </p:menu>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="dashboard-header">
+                <div class="p-grid">
+                    <div class="p-col-8">
+                        <h1>Tableau de Bord - Gestion de Stock Multiboutiques</h1>
+                        <p>Système avancé pour la gestion globale des stocks</p>
+                    </div>
+                    <div class="p-col-4">
+                        <div class="p-text-right">
+                            <p:outputLabel value="Dernière mise à jour: " />
+                            <p:outputLabel value="24/03/2025 15:45" />
+                            <p:commandButton icon="pi pi-refresh" style="margin-left: 1rem;" title="Rafraîchir les données" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h:form id="dashboardForm">
+                <!-- Sélecteur avancé -->
+                <div class="boutique-selector p-grid">
+                    <div class="p-col-2">
+                        <p:selectOneMenu style="width: 100%;">
+                            <p:selectItem itemLabel="Toutes les boutiques" itemValue="all" />
+                            <p:selectItem itemLabel="Boutique Paris" itemValue="paris" />
+                            <p:selectItem itemLabel="Boutique Shanghai" itemValue="shanghai" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-col-2">
+                        <p:selectOneMenu style="width: 100%;">
+                            <p:selectItem itemLabel="Toutes les régions" itemValue="all" />
+                            <p:selectItem itemLabel="Europe" itemValue="europe" />
+                            <p:selectItem itemLabel="Asie" itemValue="asia" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-col-2">
+                        <p:selectOneMenu style="width: 100%;">
+                            <p:selectItem itemLabel="Toutes les catégories" itemValue="all" />
+                            <p:selectItem itemLabel="Électronique" itemValue="electro" />
+                            <p:selectItem itemLabel="Mode" itemValue="fashion" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-col-2">
+                        <p:calendar readonlyInput="true" placeholder="Période" pattern="dd/MM/yyyy" style="width: 100%;" />
+                    </div>
+                    <div class="p-col-2">
+                        <p:selectOneMenu style="width: 100%;">
+                            <p:selectItem itemLabel="Tous les entrepôts" itemValue="all" />
+                            <p:selectItem itemLabel="Entrepôt A" itemValue="a" />
+                            <p:selectItem itemLabel="Entrepôt B" itemValue="b" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="p-col-2">
+                        <p:commandButton value="Filtrer" icon="pi pi-filter" style="width: 100%;" />
+                    </div>
+                </div>
+                
+                <!-- KPIs Principaux -->
+                <div class="p-grid">
+                    <div class="p-col-2">
+                        <div class="card stats-box sales">
+                            <div class="kpi-value">1 245 300</div>
+                            <div class="kpi-title">Ventes Totales</div>
+                            <div class="kpi-trend">
+                                <i class="pi pi-arrow-up text-success"></i>
+                                <h:outputText value="4.85%" />
+                                <span> vs période précédente</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-2">
+                        <div class="card stats-box revenue">
+                            <div class="kpi-value">€15.7M</div>
+                            <div class="kpi-title">Chiffre d'Affaires</div>
+                            <div class="kpi-trend">
+                                <i class="pi pi-arrow-up text-success"></i>
+                                <h:outputText value="6.20%" />
+                                <span> vs période précédente</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-2">
+                        <div class="card stats-box stock">
+                            <div class="kpi-value">5.8</div>
+                            <div class="kpi-title">Rotation des Stocks</div>
+                            <div class="kpi-trend">
+                                <i class="pi pi-arrow-down text-warning"></i>
+                                <h:outputText value="1.90%" />
+                                <span> vs période précédente</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-2">
+                        <div class="card stats-box alerts">
+                            <div class="kpi-value">142</div>
+                            <div class="kpi-title">Stocks Critiques</div>
+                            <div class="kpi-trend">
+                                <span>Seuil: 50 unités</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-2">
+                        <div class="card stats-box logistics">
+                            <div class="kpi-value">98%</div>
+                            <div class="kpi-title">Taux de Livraison</div>
+                            <div class="kpi-trend">
+                                <i class="pi pi-arrow-up text-success"></i>
+                                <h:outputText value="2.10%" />
+                                <span> vs période précédente</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-2">
+                        <div class="card stats-box suppliers">
+                            <div class="kpi-value">87%</div>
+                            <div class="kpi-title">Fiabilité Fournisseurs</div>
+                            <div class="kpi-trend">
+                                <i class="pi pi-arrow-down text-warning"></i>
+                                <h:outputText value="1.50%" />
+                                <span> vs période précédente</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Visualisations Graphiques -->
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <div class="card">
+                            <h3>Evolution des ventes par boutique</h3>
+                            <p:chart type="line" styleClass="chart-container" responsive="true" />
+                        </div>
+                    </div>
+                    <div class="p-col-6">
+                        <div class="card">
+                            <h3>Répartition des stocks par entrepôt</h3>
+                            <p:chart type="pie" styleClass="chart-container" responsive="true" />
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-grid">
+                    <div class="p-col-8">
+                        <div class="card">
+                            <h3>Stock vs Ventes (par mois)</h3>
+                            <p:chart type="bar" styleClass="chart-container" responsive="true" />
+                        </div>
+                    </div>
+                    <div class="p-col-4">
+                        <div class="card">
+                            <h3>Top 10 Produits Vendus</h3>
+                            <p:chart type="doughnut" styleClass="chart-container" responsive="true" />
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="p-grid">
+                    <div class="p-col-12">
+                        <div class="card">
+                            <h3>Carte de chaleur des ventes par région</h3>
+                            <p:gMap center="48.8566, 2.3522" zoom="4" type="ROADMAP" style="width:100%;height:400px" />
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gestion des Stocks -->
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <div class="card">
+                            <h3>Alertes de Stock</h3>
+                            <p:dataTable paginator="true" rows="5" styleClass="p-mt-2"
+                                emptyMessage="Aucune alerte de stock">
+                                <p:column headerText="Produit">
+                                    <h:outputText value="Smartphone X" />
+                                </p:column>
+                                <p:column headerText="Boutique">
+                                    <h:outputText value="Paris" />
+                                </p:column>
+                                <p:column headerText="Stock Actuel">
+                                    <h:outputText value="15" />
+                                </p:column>
+                                <p:column headerText="Seuil Min">
+                                    <h:outputText value="50" />
+                                </p:column>
+                                <p:column headerText="Sévérité">
+                                    <p:tag value="HIGH" severity="danger" />
+                                </p:column>
+                                <p:column headerText="Actions" style="width:120px;text-align:center">
+                                    <p:commandButton icon="pi pi-shopping-cart" title="Commander" />
+                                    <p:commandButton icon="pi pi-exclamation-triangle" title="Détails" />
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </div>
+                    <div class="p-col-6">
+                        <div class="card">
+                            <h3>Produits en Rupture</h3>
+                            <p:dataTable paginator="true" rows="5" styleClass="p-mt-2"
+                                emptyMessage="Aucun produit en rupture">
+                                <p:column headerText="Produit">
+                                    <h:outputText value="T-shirt Bleu" />
+                                </p:column>
+                                <p:column headerText="Catégorie">
+                                    <h:outputText value="Mode" />
+                                </p:column>
+                                <p:column headerText="Boutiques">
+                                    <h:outputText value="3" />
+                                </p:column>
+                                <p:column headerText="Dernière Vente">
+                                    <h:outputText value="20/03/2025" />
+                                </p:column>
+                                <p:column headerText="Actions" style="width:120px;text-align:center">
+                                    <p:commandButton icon="pi pi-shopping-cart" title="Commander" />
+                                    <p:commandButton icon="pi pi-search" title="Détails" />
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Performance des Boutiques -->
+                <div class="p-grid">
+                    <div class="p-col-12">
+                        <div class="card">
+                            <h3>Performance des Boutiques</h3>
+                            <p:dataTable paginator="true" rows="10" styleClass="p-mt-2"
+                                emptyMessage="Aucune donnée de performance">
+                                <p:column headerText="Boutique">
+                                    <h:outputText value="Shanghai" />
+                                </p:column>
+                                <p:column headerText="Région">
+                                    <h:outputText value="Asie" />
+                                </p:column>
+                                <p:column headerText="Ventes">
+                                    <h:outputText value="12 500" />
+                                </p:column>
+                                <p:column headerText="Chiffre d'Affaires">
+                                    <h:outputText value="€150 000" />
+                                </p:column>
+                                <p:column headerText="Marge">
+                                    <h:outputText value="22.5%" />
+                                </p:column>
+                                <p:column headerText="Rotation Stock">
+                                    <h:outputText value="6.1" />
+                                </p:column>
+                                <p:column headerText="Performance">
+                                    <p:rating value="4" readonly="true" stars="5" />
+                                </p:column>
+                                <p:column headerText="Actions" style="width:120px;text-align:center">
+                                    <p:commandButton icon="pi pi-chart-bar" title="Détails" />
+                                    <p:commandButton icon="pi pi-cog" title="Configurer" />
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Prévisions et Réapprovisionnement -->
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <div class="card">
+                            <h3>Prévisions des Ventes (6 mois)</h3>
+                            <p:chart type="line" styleClass="chart-container" responsive="true" />
+                        </div>
+                    </div>
+                    <div class="p-col-6">
+                        <div class="card">
+                            <h3>Suggestions de Réapprovisionnement</h3>
+                            <p:dataTable paginator="true" rows="5" styleClass="p-mt-2"
+                                emptyMessage="Aucune suggestion">
+                                <p:column headerText="Produit">
+                                    <h:outputText value="Laptop Pro" />
+                                </p:column>
+                                <p:column headerText="Boutique">
+                                    <h:outputText value="Paris" />
+                                </p:column>
+                                <p:column headerText="Stock Actuel">
+                                    <h:outputText value="20" />
+                                </p:column>
+                                <p:column headerText="Quantité Suggérée">
+                                    <h:outputText value="100" />
+                                </p:column>
+                                <p:column headerText="Prévision Ventes">
+                                    <h:outputText value="150" />
+                                </p:column>
+                                <p:column headerText="Actions" style="width:120px;text-align:center">
+                                    <p:commandButton icon="pi pi-check" title="Approuver" />
+                                    <p:commandButton icon="pi pi-times" title="Rejeter" />
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Logistique et Fournisseurs -->
+                <div class="p-grid">
+                    <div class="p-col-4">
+                        <div class="card">
+                            <h3>Indicateurs Logistiques</h3>
+                            <p:panelGrid columns="2" style="width:100%" styleClass="ui-noborder">
+                                <h:outputText value="Délai Moyen Livraison:" />
+                                <h:outputText value="2.5 jours" />
+                                <h:outputText value="Taux de Retours:" />
+                                <h:outputText value="1.8%" />
+                                <h:outputText value="Entrepôts Actifs:" />
+                                <h:outputText value="45" />
+                                <h:outputText value="Capacité Utilisée:" />
+                                <p:progressBar value="78" displayOnly="true" style="height:10px" />
+                                <h:outputText value="Coûts Logistiques:" />
+                                <h:outputText value="€1.2M" />
+                            </p:panelGrid>
+                        </div>
+                    </div>
+                    <div class="p-col-4">
+                        <div class="card">
+                            <h3>Suivi des Expéditions</h3>
+                            <p:dataTable paginator="true" rows="5" styleClass="p-mt-2"
+                                emptyMessage="Aucune expédition en cours">
+                                <p:column headerText="ID">
+                                    <h:outputText value="EXP12345" />
+                                </p:column>
+                                <p:column headerText="Origine">
+                                    <h:outputText value="Entrepôt A" />
+                                </p:column>
+                                <p:column headerText="Destination">
+                                    <h:outputText value="Boutique Paris" />
+                                </p:column>
+                                <p:column headerText="Statut">
+                                    <p:tag value="En transit" severity="warning" />
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </div>
+                    <div class="p-col-4">
+                        <div class="card">
+                            <h3>Performance Fournisseurs</h3>
+                            <p:dataTable paginator="true" rows="5" styleClass="p-mt-2"
+                                emptyMessage="Aucun fournisseur">
+                                <p:column headerText="Fournisseur">
+                                    <h:outputText value="TechCorp" />
+                                </p:column>
+                                <p:column headerText="Délai Moyen">
+                                    <h:outputText value="3 jours" />
+                                </p:column>
+                                <p:column headerText="Fiabilité">
+                                    <h:outputText value="92%" />
+                                </p:column>
+                                <p:column headerText="Actions">
+                                    <p:commandButton icon="pi pi-eye" title="Détails" />
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Analyse Financière -->
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <div class="card">
+                            <h3>Coûts par Catégorie</h3>
+                            <p:chart type="bar" styleClass="chart-container" responsive="true" />
+                        </div>
+                    </div>
+                    <div class="p-col-6">
+                        <div class="card">
+                            <h3>Marges par Région</h3>
+                            <p:chart type="radar" styleClass="chart-container" responsive="true" />
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stocks Dormants et Saisonnalité -->
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <div class="card">
+                            <h3>Stocks Dormants</h3>
+                            <p:dataTable paginator="true" rows="5" styleClass="p-mt-2"
+                                emptyMessage="Aucun stock dormant">
+                                <p:column headerText="Produit">
+                                    <h:outputText value="Veste Hiver" />
+                                </p:column>
+                                <p:column headerText="Boutique">
+                                    <h:outputText value="Shanghai" />
+                                </p:column>
+                                <p:column headerText="Quantité">
+                                    <h:outputText value="200" />
+                                </p:column>
+                                <p:column headerText="Jours sans vente">
+                                    <h:outputText value="90" />
+                                </p:column>
+                                <p:column headerText="Actions">
+                                    <p:commandButton icon="pi pi-exchange" title="Transférer" />
+                                    <p:commandButton icon="pi pi-tag" title="Promotion" />
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </div>
+                    <div class="p-col-6">
+                        <div class="card">
+                            <h3>Tendances Saisonnières</h3>
+                            <p:chart type="line" styleClass="chart-container" responsive="true" />
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Activité Récente et Notifications -->
+                <div class="p-grid">
+                    <div class="p-col-6">
+                        <div class="card">
+                            <h3>Activité Récente</h3>
+                            <p:timeline value="[{label: 'Commande #1234 expédiée', date: '24/03/2025'}]" 
+                                editable="false" axisPosition="top" eventStyle="box" style="height:250px" />
+                        </div>
+                    </div>
+                    <div class="p-col-6">
+                        <div class="card">
+                            <h3>Notifications</h3>
+                            <p:feed value="[{title: 'Stock critique: Smartphone X', date: '24/03/2025'}]" />
+                            <div class="p-text-right p-mt-3">
+                                <p:commandButton value="Voir tout" icon="pi pi-list" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>

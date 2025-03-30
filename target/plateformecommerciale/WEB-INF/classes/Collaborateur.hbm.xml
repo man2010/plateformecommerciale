@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 24 mars 2025, 00:24:48 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="gestion.Collaborateur" optimistic-lock="none" schema="public" table="collaborateur">
+        <composite-id class="gestion.CollaborateurId" name="id">
+            <key-property name="idcollab" type="int">
+                <column name="idcollab"/>
+            </key-property>
+            <key-property name="idutilisateur" type="int">
+                <column name="idutilisateur"/>
+            </key-property>
+        </composite-id>
+        <property name="date" type="date">
+            <column length="13" name="date"/>
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="contrats" table="contrat">
+            <key>
+                <column name="idutilisateur"/>
+                <column name="idcollab"/>
+            </key>
+            <one-to-many class="gestion.Contrat"/>
+        </set>
+        <set fetch="select" inverse="true" lazy="true" name="typecollaborateurs" table="typecollaborateur">
+            <key>
+                <column name="idutilisateur"/>
+                <column name="idcollab"/>
+            </key>
+            <one-to-many class="gestion.Typecollaborateur"/>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+    <title>Inscription - Plateforme Multi-Boutiques</title>
+    <style>
+        .register-container {
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+        .register-header {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 4px 4px 0 0;
+        }
+        .register-footer {
+            text-align: center;
+            margin-top: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .password-strength {
+            margin-top: 0.5rem;
+        }
+        .password-strength .ui-password-panel {
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        .ui-fileupload-buttonbar {
+            background: none !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+        .photo-preview {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 50%;
+            margin-top: 0.5rem;
+            border: 2px solid #e0e0e0;
+        }
+        .terms-link {
+            color: #6e8efb;
+            text-decoration: none;
+        }
+        .terms-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="register-container">
+        <h:form id="registerForm" enctype="multipart/form-data">
+            <p:panel styleClass="shadow-5">
+                <f:facet name="header">
+                    <div class="register-header">
+                        <h2>Créez votre compte</h2>
+                        <p>Rejoignez notre plateforme multi-boutiques</p>
+                    </div>
+                </f:facet>
+
+                <p:messages id="globalMsgs" showDetail="true" autoUpdate="true" closable="true" 
+                            severity="error,warn" life="6000" />
+
+                <p:panelGrid columns="2" layout="grid" styleClass="ui-noborder" columnClasses="ui-grid-col-4,ui-grid-col-8">
+                    <!-- Section Informations Personnelles -->
+                    <p:outputLabel value="Informations Personnelles" style="font-weight: bold; color: #6e8efb; grid-column: span 2; margin: 1rem 0 0.5rem 0;"/>
+                    
+                    <!-- Nom -->
+                    <p:outputLabel for="nom" value="Nom *" />
+                    <p:inputText id="nom" value="#{registerBean.utilisateur.nom}" required="true" 
+                                 requiredMessage="Le nom est requis" placeholder="Entrez votre nom"
+                                 pt:aria-label="Nom" style="width: 100%">
+                        <f:validateLength minimum="2" maximum="50" />
+                    </p:inputText>
+                    
+                    <!-- Prénom -->
+                    <p:outputLabel for="prenom" value="Prénom *" />
+                    <p:inputText id="prenom" value="#{registerBean.utilisateur.prenom}" required="true" 
+                                 requiredMessage="Le prénom est requis" placeholder="Entrez votre prénom"
+                                 pt:aria-label="Prénom" style="width: 100%">
+                        <f:validateLength minimum="2" maximum="50" />
+                    </p:inputText>
+                    
+                    <!-- Email -->
+                    <p:outputLabel for="email" value="Email *" />
+                    <p:inputText id="email" value="#{registerBean.utilisateur.email}" required="true" 
+                                 validator="#{registerBean.validateEmail}" placeholder="exemple@domaine.com"
+                                 pt:aria-label="Email" style="width: 100%">
+                        <p:ajax event="blur" update="emailMsg" />
+                    </p:inputText>
+                    <p:message for="email" id="emailMsg" display="icon" />
+                    
+                    <!-- Téléphone -->
+                    <p:outputLabel for="telephone" value="Téléphone *" />
+                    <p:inputMask id="telephone" value="#{registerBean.utilisateur.telephone}" 
+                                 mask="+999 999 999 999" placeholder="+123 456 789 012" 
+                                 required="true" style="width: 100%" />
+                    
+                    <!-- Section Identifiants -->
+                    <p:outputLabel value="Identifiants de Connexion" style="font-weight: bold; color: #6e8efb; grid-column: span 2; margin: 1rem 0 0.5rem 0;"/>
+                    
+                    <!-- Login -->
+                    <p:outputLabel for="login" value="Nom d'utilisateur *" />
+                    <p:inputText id="login" value="#{registerBean.compteUtilisateur.login}" required="true" 
+                                 requiredMessage="Le nom d'utilisateur est requis" placeholder="Choisissez un login"
+                                 pt:aria-label="Nom d'utilisateur" style="width: 100%">
+                        <f:validateLength minimum="4" maximum="20" />
+                        <p:ajax event="blur" update="loginMsg" />
+                    </p:inputText>
+                    <p:message for="login" id="loginMsg" display="icon" />
+                    
+                    <!-- Mot de passe -->
+                    <p:outputLabel for="motpass" value="Mot de passe *" />
+                    <p:password id="motpass" value="#{registerBean.compteUtilisateur.motpasse}" required="true" 
+                                feedback="true" match="confirmMotpass" label="Mot de passe" 
+                                placeholder="Entrez un mot de passe sécurisé" style="width: 100%"
+                                promptLabel="Entrez un mot de passe"
+                                weakLabel="Faible"
+                                goodLabel="Moyen"
+                                strongLabel="Fort">
+                        <f:validateLength minimum="8" maximum="30" />
+                    </p:password>
+                    
+                    <!-- Confirmation mot de passe -->
+                    <p:outputLabel for="confirmMotpass" value="Confirmation *" />
+                    <p:password id="confirmMotpass" required="true" placeholder="Confirmez le mot de passe" 
+                                style="width: 100%" feedback="true" />
+                    
+                    <!-- Section Profil -->
+                    <p:outputLabel value="Profil Utilisateur" style="font-weight: bold; color: #6e8efb; grid-column: span 2; margin: 1rem 0 0.5rem 0;"/>
+                    
+                    <!-- Type d'utilisateur -->
+                    <p:outputLabel for="typeUser" value="Type d'utilisateur *" />
+                    <p:selectOneMenu id="typeUser" value="#{registerBean.utilisateur.idTypeUser}" required="true"
+                                    style="width: 100%">
+                        <f:selectItem itemLabel="Sélectionnez un type" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{registerBean.typeUtilisateurList}" var="type" 
+                                       itemLabel="#{type.nomType}" itemValue="#{type.idTypeUser}" />
+                    </p:selectOneMenu>
+                    
+                    <!-- Photo -->
+                    <p:outputLabel for="photo" value="Photo de profil" />
+                    <div>
+                        <p:fileUpload id="photo" value="#{registerBean.utilisateur.photo}" mode="simple" 
+                                      fileUploadListener="#{registerBean.handleFileUpload}" auto="true"
+                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                      sizeLimit="1000000"
+                                      label="Choisir une image"
+                                      invalidFileMessage="Type de fichier non supporté"
+                                      invalidSizeMessage="La taille maximale est de 1MB"
+                                      style="width: auto" />
+                        <p:graphicImage value="#{registerBean.utilisateur.photoPreview}" rendered="#{registerBean.utilisateur.photoPreview ne null}"
+                                      styleClass="photo-preview" />
+                    </div>
+                </p:panelGrid>
+                
+                <!-- Conditions d'utilisation -->
+                <div style="margin: 1rem 0;">
+                    <p:selectBooleanCheckbox id="terms" value="#{registerBean.acceptTerms}" required="true"
+                                           requiredMessage="Vous devez accepter les conditions d'utilisation" />
+                    <p:outputLabel for="terms" value=" J'accepte les " style="margin-left: 0.5rem;" />
+                    <p:commandLink value="conditions d'utilisation" styleClass="terms-link" 
+                                 onclick="PF('termsDialog').show();return false;" />
+                </div>
+                
+                <!-- Boutons -->
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <p:commandButton value="S'inscrire" action="#{registerBean.register}" update="globalMsgs registerForm" 
+                                   styleClass="ui-button-success" icon="pi pi-check" 
+                                   disabled="#{not registerBean.acceptTerms}" />
+                    <p:commandButton value="Annuler" type="reset" styleClass="ui-button-secondary" icon="pi pi-times"
+                                    onclick="PF('registerForm').reset();" style="margin-left: 0.5rem;" />
+                </div>
+                
+                <div class="register-footer">
+                    Déjà membre? <p:commandLink value="Connectez-vous ici" action="#{loginBean.redirectToLogin}" immediate="true" />
+                </div>
+            </p:panel>
+        </h:form>
+    </div>
+    
+    <!-- Dialog pour les conditions d'utilisation -->
+    <p:dialog header="Conditions d'Utilisation" widgetVar="termsDialog" modal="true" resizable="false" 
+              style="width: 80%; max-width: 600px;">
+        <h3>1. Acceptation des conditions</h3>
+        <p>En utilisant cette plateforme, vous acceptez les présentes conditions d'utilisation.</p>
+        
+        <h3>2. Compte Utilisateur</h3>
+        <p>Vous êtes responsable de maintenir la confidentialité de votre compte et mot de passe.</p>
+        
+        <h3>3. Données Personnelles</h3>
+        <p>Vos données personnelles sont traitées conformément à notre politique de confidentialité.</p>
+        
+        <h3>4. Responsabilités</h3>
+        <p>Vous êtes responsable de toutes les activités effectuées sous votre compte.</p>
+        
+        <div style="text-align: center; margin-top: 1rem;">
+            <p:commandButton value="J'accepte" onclick="PF('termsDialog').hide();" 
+                            styleClass="ui-button-success" icon="pi pi-check" />
+            <p:commandButton value="Fermer" onclick="PF('termsDialog').hide();" 
+                            styleClass="ui-button-secondary" style="margin-left: 0.5rem;" />
+        </div>
+    </p:dialog>
+    
+    <!-- Script pour améliorer l'expérience utilisateur -->
+    <h:outputScript>
+        $(document).ready(function() {
+            // Focus sur le premier champ
+            setTimeout(function() {
+                $('#registerForm\\:nom').focus();
+            }, 100);
+            
+            // Validation en temps réel
+            $('#registerForm').on('blur', 'input[type="text"], input[type="password"]', function() {
+                $(this).trigger('change');
+            });
+        });
+    </h:outputScript>
+</h:body>
+</html>

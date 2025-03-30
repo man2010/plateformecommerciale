@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Dashboard Stock - TEST</title>
+    <style>
+        .layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 220px; background: #2c3e50; color: white; padding: 15px; }
+        .main { flex: 1; padding: 20px; background: #f5f7fa; }
+        .card { background: white; padding: 15px; margin-bottom: 15px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .kpi { text-align: center; padding: 10px; }
+        .critical { color: #e74c3c; font-weight: bold; }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="layout">
+        <!-- Sidebar simplifiée -->
+        <div class="sidebar">
+            <h3 style="text-align:center;">Menu</h3>
+            <p:menu style="width:100%">
+                <p:submenu label="Stock">
+                    <p:menuitem value="Tableau de bord" url="#" />
+                    <p:menuitem value="Inventaire" url="#" />
+                </p:submenu>
+                <p:menuitem value="Boutiques" url="#" />
+                <p:menuitem value="Fournisseurs" url="#" />
+            </p:menu>
+        </div>
+
+        <!-- Contenu principal -->
+        <div class="main">
+            <h1 style="margin-top:0;">Tableau de Bord Stock TEST</h1>
+            
+            <!-- KPIs -->
+            <div class="p-grid">
+                <div class="p-col-12 p-md-3">
+                    <div class="card kpi">
+                        <h3>Stock Total</h3>
+                        <h2>1,248</h2>
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-3">
+                    <div class="card kpi">
+                        <h3>Valeur Stock</h3>
+                        <h2>24,560 €</h2>
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-3">
+                    <div class="card kpi">
+                        <h3>Alertes</h3>
+                        <h2 class="critical">12</h2>
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-3">
+                    <div class="card kpi">
+                        <h3>Boutiques</h3>
+                        <h2>5</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alertes de stock -->
+            <div class="card">
+                <h2 style="margin-top:0;">Alertes de Stock (Données Test)</h2>
+                <p:dataTable value="#{['Produit A', 'Produit B', 'Produit C', 'Produit D']}" var="produit">
+                    <p:column headerText="Produit">
+                        #{produit}
+                    </p:column>
+                    <p:column headerText="Boutique">
+                        Boutique #{['1','2','3','4'][rowIndex]}
+                    </p:column>
+                    <p:column headerText="Stock Actuel">
+                        #{[3,5,2,7][rowIndex]}
+                    </p:column>
+                    <p:column headerText="Seuil Min">
+                        5
+                    </p:column>
+                    <p:column headerText="Statut">
+<!--                         <p:tag value="#{[3,5,2,7][rowIndex] < 5 ? 'CRITIQUE' : 'NORMAL'}"  -->
+<!--                               severity="#{[3,5,2,7][rowIndex] < 5 ? 'danger' : 'success'}"/> -->
+<!--                    --> </p:column>
+                </p:dataTable>
+            </div>
+
+            <!-- Mouvements de stock -->
+            <div class="p-grid">
+                <div class="p-col-12 p-md-6">
+                    <div class="card">
+                        <h2 style="margin-top:0;">Dernières Entrées</h2>
+                        <p:dataTable value="#{['2023-05-01', '2023-04-28', '2023-04-25']}" var="date">
+                            <p:column headerText="Date">
+                                #{date}
+                            </p:column>
+                            <p:column headerText="Produit">
+                                Produit #{['X','Y','Z'][rowIndex]}
+                            </p:column>
+                            <p:column headerText="Quantité">
+                                #{[15,20,8][rowIndex]}
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+
+                <div class="p-col-12 p-md-6">
+                    <div class="card">
+                        <h2 style="margin-top:0;">Dernières Sorties</h2>
+                        <p:dataTable value="#{['2023-05-02', '2023-04-30', '2023-04-27']}" var="date">
+                            <p:column headerText="Date">
+                                #{date}
+                            </p:column>
+                            <p:column headerText="Produit">
+                                Produit #{['A','B','C'][rowIndex]}
+                            </p:column>
+                            <p:column headerText="Quantité">
+                                #{[5,12,3][rowIndex]}
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</h:body>
+</html>

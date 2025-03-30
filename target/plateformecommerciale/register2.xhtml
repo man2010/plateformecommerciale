@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Inscription - Système Multi-Boutiques</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+        }
+        .registration-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            width: 500px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+        .registration-container:hover {
+            transform: scale(1.01);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+        }
+        .registration-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .registration-header h1 {
+            color: #764ba2;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .registration-header p {
+            color: #888;
+        }
+        .p-field {
+            margin-bottom: 15px;
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="registration-container">
+        <div class="registration-header">
+            <h1>Créer un Compte</h1>
+            <p>Rejoignez notre plateforme multi-boutiques</p>
+        </div>
+        
+        <h:form id="registrationForm">
+            <p:messages autoUpdate="true" closable="true"/>
+            
+            <div class="p-fluid">
+                <div class="p-grid">
+                    <div class="p-col-6 p-field">
+                        <p:inputText 
+                            id="firstName" 
+                            placeholder="Prénom" 
+                            required="true"
+                            requiredMessage="Veuillez saisir votre prénom"
+                            styleClass="p-input-icon-left">
+                            <i class="pi pi-user"></i>
+                        </p:inputText>
+                    </div>
+                    <div class="p-col-6 p-field">
+                        <p:inputText 
+                            id="lastName" 
+                            placeholder="Nom de famille" 
+                            required="true"
+                            requiredMessage="Veuillez saisir votre nom de famille"
+                            styleClass="p-input-icon-left">
+                            <i class="pi pi-user"></i>
+                        </p:inputText>
+                    </div>
+                </div>
+                
+                <div class="p-field">
+                    <p:inputText 
+                        id="email" 
+                        placeholder="Adresse email" 
+                        required="true"
+                        validatorMessage="Format d'email invalide"
+                        requiredMessage="Veuillez saisir votre email">
+                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                        <i class="pi pi-envelope"></i>
+                    </p:inputText>
+                </div>
+                
+                <div class="p-field">
+                    <p:inputText 
+                        id="phoneNumber" 
+                        placeholder="Numéro de téléphone" 
+                        required="true"
+                        requiredMessage="Veuillez saisir votre numéro de téléphone">
+                        <i class="pi pi-phone"></i>
+                    </p:inputText>
+                </div>
+                
+                <div class="p-grid">
+                    <div class="p-col-6 p-field">
+                        <p:password 
+                            id="password" 
+                            placeholder="Mot de passe" 
+                            required="true"
+                            requiredMessage="Veuillez saisir un mot de passe"
+                            feedback="true"
+                            weakLabel="Faible"
+                            goodLabel="Moyen"
+                            strongLabel="Fort"
+                            toggleMask="true">
+                        </p:password>
+                    </div>
+                    <div class="p-col-6 p-field">
+                        <p:password 
+                            id="confirmPassword" 
+                            placeholder="Confirmer le mot de passe" 
+                            required="true"
+                            requiredMessage="Veuillez confirmer votre mot de passe"
+                            toggleMask="true">
+                        </p:password>
+                    </div>
+                </div>
+                
+                <div class="p-field">
+                    <p:selectOneMenu id="accountType" 
+                                     required="true"
+                                     requiredMessage="Veuillez sélectionner un type de compte">
+                        <f:selectItem itemLabel="Type de Compte" itemValue="" />
+                        <f:selectItem itemLabel="Vendeur" itemValue="seller" />
+                        <f:selectItem itemLabel="Acheteur" itemValue="buyer" />
+                        <f:selectItem itemLabel="Partenaire" itemValue="partner" />
+                    </p:selectOneMenu>
+                </div>
+                
+                <p:commandButton 
+                    value="S'inscrire" 
+                    icon="pi pi-user-plus"
+                    styleClass="p-mt-3 p-button-gradient"
+                    action="#{registrationBean.register()}"/>
+                
+                <div class="p-mt-3 p-text-center">
+                    <p:link value="Déjà un compte ? Connectez-vous" href="#"/>
+                </div>
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>

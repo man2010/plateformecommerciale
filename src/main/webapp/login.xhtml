@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Connexion - PrimeFaces</title>
+    <style>
+        /* Ajout d'un fond dégradé */
+        body {
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            font-family: Arial, sans-serif;
+        }
+
+        /* Centrer le formulaire */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Styliser le panel de connexion */
+        .custom-panel {
+            background: white !important;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center; /* Centrer le contenu */
+        }
+
+        /* Style du logo */
+        .logo {
+            display: block;
+            margin: 0 auto 15px;
+            max-width: 150px;
+        }
+
+        /* Styliser les labels */
+        .custom-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Styliser les champs de saisie */
+        .custom-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        /* Effet au survol des champs */
+        .custom-input:focus {
+            border-color: #0072ff;
+            box-shadow: 0 0 5px rgba(0, 114, 255, 0.5);
+        }
+
+        /* Styliser le bouton */
+        .custom-button {
+            background-color: #0072ff !important;
+            color: white !important;
+            border: none !important;
+            padding: 10px 15px !important;
+            border-radius: 5px !important;
+            transition: 0.3s !important;
+            font-weight: bold !important;
+        }
+
+        /* Effet au survol du bouton */
+        .custom-button:hover {
+            background-color: #005bb5 !important;
+            cursor: pointer;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="login-container">
+        <h:form class="login-form">
+            <p:panel header="Connexion" styleClass="custom-panel">
+                <!-- Image à l'intérieur du formulaire -->
+                <p:graphicImage value="images/welcome.webp" styleClass="logo"/>
+
+                <p:messages showDetail="true" closable="true"/>
+                
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="login" value="Email :" styleClass="custom-label"/>
+                    <p:inputText id="login" value="#{connexionBean.utilisateur.login}" type="email" styleClass="custom-input" required="true" requiredMessage="Veuillez saisir votre email."/>
+
+                    <h:outputLabel for="motpass" value="Mot de Passe :" styleClass="custom-label"/>
+                    <p:password id="motpass" value="#{connexionBean.utilisateur.motpass}" styleClass="custom-input" required="true" requiredMessage="Veuillez saisir votre mot de passe."/>
+
+                    <h:outputText />
+                    <p:commandButton value="Connexion" action="#{connexionBean.connexion}" ajax="false" styleClass="custom-button"/>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </div>
+</h:body>
+
+</html>

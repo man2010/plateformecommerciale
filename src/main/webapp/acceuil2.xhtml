@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Alibaba.com - Clone Complet</title>
+        <h:outputStylesheet>
+            <![CDATA[
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                    font-family: 'Arial', sans-serif;
+                }
+                
+                body {
+                    background-color: #f8f9fa;
+                    color: #333;
+                    line-height: 1.6;
+                }
+                
+                /* Header Styles */
+                .header {
+                    background-color: white;
+                    padding: 15px 30px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                    position: sticky;
+                    top: 0;
+                    z-index: 1000;
+                }
+                
+                .logo {
+                    max-width: 180px;
+                    height: auto;
+                }
+                
+                .search-container {
+                    display: flex;
+                    width: 50%;
+                    margin: 0 20px;
+                }
+                
+                .search-category {
+                    border: 1px solid #FF6A00;
+                    border-radius: 4px 0 0 4px;
+                    padding: 0 15px;
+                    background-color: #f9f9f9;
+                    outline: none;
+                }
+                
+                .search-input {
+                    flex-grow: 1;
+                    padding: 10px 15px;
+                    border: 1px solid #ddd;
+                    border-left: none;
+                    border-right: none;
+                    outline: none;
+                }
+                
+                .search-btn, .image-search-btn {
+                    background-color: #FF6A00 !important;
+                    color: white !important;
+                    border: none !important;
+                    padding: 0 15px !important;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                }
+                
+                .search-btn:hover, .image-search-btn:hover {
+                    background-color: #e05d00 !important;
+                }
+                
+                .image-search-btn {
+                    border-radius: 0 4px 4px 0 !important;
+                }
+                
+                .user-menu {
+                    display: flex;
+                    align-items: center;
+                }
+                
+                .user-menu a {
+                    margin: 0 12px;
+                    text-decoration: none;
+                    color: #333;
+                    font-size: 14px;
+                    transition: color 0.3s;
+                }
+                
+                .user-menu a:hover {
+                    color: #FF6A00;
+                }
+                
+                .cart-badge, .notif-badge {
+                    background-color: #FF6A00 !important;
+                    color: white !important;
+                    border-radius: 50% !important;
+                    padding: 2px 6px !important;
+                    font-size: 0.7em !important;
+                    margin-left: 5px;
+                }
+                
+                /* Navigation Styles */
+                .main-nav {
+                    background-color: #FF6A00;
+                    color: white;
+                    padding: 0;
+                    border: none;
+                }
+                
+                .main-nav .ui-menuitem {
+                    margin: 0;
+                    padding: 12px 20px;
+                }
+                
+                .main-nav .ui-menuitem:hover {
+                    background-color: #e05d00;
+                }
+                
+                .main-nav .ui-menuitem-text {
+                    color: white !important;
+                    font-weight: 500;
+                }
+                
+                /* Banner Styles */
+                .main-banner {
+                    width: 100%;
+                    overflow: hidden;
+                    position: relative;
+                    margin-bottom: 30px;
+                }
+                
+                .banner-image {
+                    width: 100%;
+                    height: 400px;
+                    object-fit: cover;
+                }
+                
+                .banner-content {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    text-align: center;
+                    color: white;
+                    background-color: rgba(0,0,0,0.6);
+                    padding: 30px;
+                    border-radius: 8px;
+                    max-width: 80%;
+                }
+                
+                .banner-title {
+                    font-size: 2.5rem;
+                    margin-bottom: 15px;
+                    color: white;
+                }
+                
+                .banner-desc {
+                    font-size: 1.2rem;
+                    margin-bottom: 25px;
+                }
+                
+                .cta-button {
+                    background-color: #FF6A00 !important;
+                    color: white !important;
+                    border: none !important;
+                    padding: 12px 30px !important;
+                    font-size: 1.1rem;
+                    border-radius: 4px !important;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                }
+                
+                .cta-button:hover {
+                    background-color: #e05d00 !important;
+                }
+                
+                /* Sections Common Styles */
+                .section-title {
+                    font-size: 1.8rem;
+                    color: #333;
+                    margin-bottom: 25px;
+                    text-align: center;
+                    position: relative;
+                    padding-bottom: 10px;
+                }
+                
+                .section-title:after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 80px;
+                    height: 3px;
+                    background-color: #FF6A00;
+                }
+                
+                /* Services Section */
+                .services-section {
+                    padding: 50px 30px;
+                    background-color: white;
+                    margin-bottom: 30px;
+                }
+                
+                .services-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                    gap: 30px;
+                    margin-top: 30px;
+                }
+                
+                .service-card {
+                    text-align: center;
+                    padding: 20px 15px;
+                    transition: transform 0.3s;
+                }
+                
+                .service-card:hover {
+                    transform: translateY(-5px);
+                }
+                
+                .service-icon {
+                    max-width: 70px;
+                    height: auto;
+                    margin-bottom: 15px;
+                }
+                
+                .service-title {
+                    font-weight: bold;
+                    margin-bottom: 8px;
+                    color: #333;
+                }
+                
+                .service-desc {
+                    color: #666;
+                    font-size: 0.9rem;
+                }
+                
+                /* Categories Section */
+                .categories-section {
+                    padding: 50px 30px;
+                    background-color: #f8f9fa;
+                    margin-bottom: 30px;
+                }
+                
+                .categories-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 25px;
+                    margin-top: 30px;
+                }
+                
+                .category-card {
+                    background-color: white;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+                    transition: transform 0.3s, box-shadow 0.3s;
+                    text-align: center;
+                    padding: 15px;
+                }
+                
+                .category-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+                }
+                
+                .category-image {
+                    width: 100%;
+                    height: 150px;
+                    object-fit: cover;
+                    border-radius: 4px;
+                    margin-bottom: 15px;
+                }
+                
+                .category-name {
+                    font-weight: bold;
+                    color: #333;
+                }
+                
+                /* Products Section */
+                .products-section {
+                    padding: 50px 30px;
+                    background-color: white;
+                    margin-bottom: 30px;
+                }
+                
+                .products-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                    gap: 25px;
+                    margin-top: 30px;
+                }
+                
+                .product-card {
+                    background-color: white;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+                    transition: transform 0.3s, box-shadow 0.3s;
+                    padding: 15px;
+                }
+                
+                .product-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+                }
+                
+                .product-image {
+                    width: 100%;
+                    height: 180px;
+                    object-fit: contain;
+                    margin-bottom: 15px;
+                    background-color: #f8f9fa;
+                    padding: 10px;
+                    border-radius: 4px;
+                }
+                
+                .product-name {
+                    font-weight: bold;
+                    margin-bottom: 8px;
+                    color: #333;
+                }
+                
+                .product-price {
+                    color: #FF6A00;
+                    font-weight: bold;
+                    font-size: 1.1rem;
+                    margin-bottom: 8px;
+                }
+                
+                .product-supplier {
+                    color: #666;
+                    font-size: 0.9rem;
+                    margin-bottom: 15px;
+                }
+                
+                .product-btn {
+                    background-color: #f0f0f0 !important;
+                    color: #333 !important;
+                    border: none !important;
+                    padding: 8px 15px !important;
+                    font-size: 0.9rem;
+                    border-radius: 4px !important;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                    margin-right: 10px;
+                }
+                
+                .product-btn:hover {
+                    background-color: #e0e0e0 !important;
+                }
+                
+                .product-btn.primary {
+                    background-color: #FF6A00 !important;
+                    color: white !important;
+                }
+                
+                .product-btn.primary:hover {
+                    background-color: #e05d00 !important;
+                }
+                
+                /* Footer Styles */
+                .footer {
+                    background-color: #2d2d2d;
+                    color: #ddd;
+                    padding: 50px 30px 20px;
+                }
+                
+                .footer-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                    gap: 30px;
+                    margin-bottom: 30px;
+                }
+                
+                .footer-title {
+                    font-weight: bold;
+                    color: white;
+                    margin-bottom: 20px;
+                    display: block;
+                    font-size: 1.1rem;
+                }
+                
+                .footer-link {
+                    display: block;
+                    color: #aaa;
+                    margin-bottom: 10px;
+                    text-decoration: none;
+                    transition: color 0.3s;
+                }
+                
+                .footer-link:hover {
+                    color: #FF6A00;
+                }
+                
+                .footer-bottom {
+                    text-align: center;
+                    padding-top: 20px;
+                    border-top: 1px solid #444;
+                    color: #aaa;
+                    font-size: 0.9rem;
+                }
+                
+                /* Responsive Adjustments */
+                @media (max-width: 992px) {
+                    .header {
+                        flex-direction: column;
+                        padding: 15px;
+                    }
+                    
+                    .search-container {
+                        width: 100%;
+                        margin: 15px 0;
+                    }
+                    
+                    .user-menu {
+                        margin-top: 15px;
+                    }
+                    
+                    .services-grid, .categories-grid, .products-grid {
+                        grid-template-columns: repeat(3, 1fr);
+                    }
+                }
+                
+                @media (max-width: 768px) {
+                    .services-grid, .categories-grid, .products-grid {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+                    
+                    .footer-grid {
+                        grid-template-columns: repeat(3, 1fr);
+                    }
+                    
+                    .banner-content {
+                        padding: 20px;
+                    }
+                    
+                    .banner-title {
+                        font-size: 1.8rem;
+                    }
+                    
+                    .banner-desc {
+                        font-size: 1rem;
+                    }
+                }
+                
+                @media (max-width: 576px) {
+                    .services-grid, .categories-grid, .products-grid {
+                        grid-template-columns: 1fr;
+                    }
+                    
+                    .footer-grid {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+                    
+                    .search-category {
+                        display: none;
+                    }
+                    
+                    .search-input {
+                        border-left: 1px solid #ddd;
+                    }
+                }
+            ]]>
+        </h:outputStylesheet>
+    </h:head>
+    <h:body>
+        <!-- Header -->
+        <h:form styleClass="header">
+            <p:graphicImage name="images/logo.jpg" library="images" styleClass="logo" alt="Alibaba Logo" />
+            
+            <h:panelGroup layout="block" styleClass="search-container">
+                <p:selectOneMenu styleClass="search-category">
+                    <f:selectItem itemLabel="Toutes les Catégories" itemValue="all" />
+                    <f:selectItem itemLabel="Électronique" itemValue="electronics" />
+                    <f:selectItem itemLabel="Mode" itemValue="fashion" />
+                    <f:selectItem itemLabel="Maison - Jardin" itemValue="home" />
+                    <f:selectItem itemLabel="Industrie" itemValue="industry" />
+                </p:selectOneMenu>
+                <p:inputText placeholder="Rechercher des produits, fournisseurs..." styleClass="search-input" />
+                <p:commandButton value="🔍 Rechercher" styleClass="search-btn" action="#{searchBean.search}" />
+                <p:commandButton value="📷" styleClass="image-search-btn" />
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="user-menu">
+                <p:commandLink value="Connexion" />
+                <p:commandLink value="S'inscrire" />
+                <p:commandLink value="Mon Alibaba" />
+                <p:commandLink value="Panier">
+                    <p:outputLabel value="3" styleClass="cart-badge" />
+                </p:commandLink>
+                <p:commandLink value="Notifications">
+                    <p:outputLabel value="2" styleClass="notif-badge" />
+                </p:commandLink>
+                <p:commandLink value="Aide" />
+            </h:panelGroup>
+        </h:form>
+
+        <!-- Main Navigation -->
+        <p:menubar styleClass="main-nav">
+            <p:menuitem value="Toutes les Catégories" url="#" />
+            <p:menuitem value="Demande de Devis" url="#" />
+            <p:menuitem value="Prêt à Expédier" url="#" />
+            <p:menuitem value="Assurance Commerciale" url="#" />
+            <p:menuitem value="Salons Commerciaux" url="#" />
+        </p:menubar>
+
+        <!-- Main Banner -->
+        <p:panel styleClass="main-banner">
+            <p:graphicImage name="images/banner.jpg" library="images" styleClass="banner-image" alt="Banner" />
+            <h:panelGroup layout="block" styleClass="banner-content">
+                <h2 styleClass="banner-title">Sourcing Global Simplifié</h2>
+                <p styleClass="banner-desc">Connectez-vous avec des millions de fournisseurs dans le monde</p>
+                <p:commandButton value="Acheter Maintenant" styleClass="cta-button" />
+            </h:panelGroup>
+        </p:panel>
+
+        <!-- Services Section -->
+        <p:panel styleClass="services-section">
+            <h2 styleClass="section-title">Nos Services</h2>
+            <p:dataGrid var="service" value="#{serviceBean.services}" columns="6" styleClass="services-grid">
+                <p:column>
+                    <h:panelGroup layout="block" styleClass="service-card">
+                        <p:graphicImage name="images/service-#{service.id}.png" library="images" styleClass="service-icon" alt="Service Icon" />
+                        <h:outputText value="#{service.title}" styleClass="service-title" />
+                        <h:outputText value="#{service.description}" styleClass="service-desc" />
+                    </h:panelGroup>
+                </p:column>
+            </p:dataGrid>
+        </p:panel>
+
+        <!-- Categories Section -->
+        <p:panel styleClass="categories-section">
+            <h2 styleClass="section-title">Catégories Populaires</h2>
+            <p:dataGrid var="category" value="#{categoryBean.categories}" columns="5" styleClass="categories-grid">
+                <p:column>
+                    <h:panelGroup layout="block" styleClass="category-card">
+                        <p:graphicImage name="images/category-#{category.id}.jpg" library="images" styleClass="category-image" alt="Category Image" />
+                        <h:outputText value="#{category.name}" styleClass="category-name" />
+                    </h:panelGroup>
+                </p:column>
+            </p:dataGrid>
+        </p:panel>
+
+        <!-- Products Section -->
+        <p:panel styleClass="products-section">
+            <h2 styleClass="section-title">Produits Recommandés</h2>
+            <p:dataGrid var="product" value="#{productBean.products}" columns="4" styleClass="products-grid">
+                <p:column>
+                    <h:panelGroup layout="block" styleClass="product-card">
+                        <p:graphicImage name="images/product-#{product.id}.jpg" library="images" styleClass="product-image" alt="Product Image" />
+                        <h:outputText value="#{product.name}" styleClass="product-name" />
+                        <h:outputText value="#{product.price}" styleClass="product-price" />
+                        <h:outputText value="Par #{product.supplier}" styleClass="product-supplier" />
+                        <div style="margin-top: 15px;">
+                            <p:commandButton value="Contacter" styleClass="product-btn" action="#{productBean.contactSupplier(product)}" />
+                            <p:commandButton value="Ajouter" styleClass="product-btn primary" action="#{cartBean.addToCart(product)}" />
+                        </div>
+                    </h:panelGroup>
+                </p:column>
+            </p:dataGrid>
+        </p:panel>
+
+        <!-- Footer -->
+        <p:panel styleClass="footer">
+            <p:dataGrid var="footerColumn" value="#{footerBean.footerColumns}" columns="6" styleClass="footer-grid">
+                <p:column>
+                    <h:outputText value="#{footerColumn.title}" styleClass="footer-title" />
+                    <p:menu>
+                        <p:submenu>
+                            <!-- <c:forEach items="#{footerColumn.links}" var="link">
+                                <p:menuitem value="#{link.label}" url="#{link.url}" styleClass="footer-link" />
+                            </c:forEach> -->
+                            <p:menuitem value="À propos de nous" url="#" styleClass="footer-link" />
+                            <p:menuitem value="Carrières" url="#" styleClass="footer-link" />
+                            <p:menuitem value="Presse" url="#" styleClass="footer-link" />
+                        </p:submenu>
+                    </p:menu>
+                </p:column>
+            </p:dataGrid>
+            <h:panelGroup layout="block" styleClass="footer-bottom">
+                <h:outputText value="© 2025 Alibaba.com. Tous droits réservés." />
+            </h:panelGroup>
+        </p:panel>
+    </h:body>
+</html>

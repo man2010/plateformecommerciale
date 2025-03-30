@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Système Multi-Boutiques - Authentification</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .auth-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            width: 400px;
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+        .auth-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+        }
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .auth-header h1 {
+            color: #764ba2;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .auth-header p {
+            color: #888;
+        }
+    </style>
+</h:head>
+<h:body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1>Multi-Boutiques</h1>
+            <p>Connectez-vous à votre espace marchand</p>
+        </div>
+        
+        <h:form id="loginForm">
+            <p:messages autoUpdate="true" closable="true"/>
+            
+            <div class="p-fluid">
+                <p:inputText 
+                    id="username" 
+                    placeholder="Nom d'utilisateur" 
+                    required="true"
+                    requiredMessage="Veuillez saisir votre nom d'utilisateur"
+                    styleClass="p-input-icon-left">
+                    <i class="pi pi-user"></i>
+                </p:inputText>
+                
+                <p:password 
+                    id="password" 
+                    placeholder="Mot de passe" 
+                    required="true"
+                    requiredMessage="Veuillez saisir votre mot de passe"
+                    toggleMask="true"
+                    styleClass="p-mt-3">
+                </p:password>
+                
+                <p:commandButton 
+                    value="Connexion" 
+                    icon="pi pi-sign-in"
+                    styleClass="p-mt-3 p-button-gradient"
+                    action="#{loginBean.login()}"/>
+                
+                <div class="p-mt-3 p-text-center">
+                    <p:link value="Mot de passe oublié ?" href="#"/>
+                    <p:link value="Créer un compte" href="#" styleClass="p-ml-3"/>
+                </div>
+            </div>
+        </h:form>
+    </div>
+</h:body>
+</html>

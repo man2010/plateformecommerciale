@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Alibaba.com - Clone Complet</title>
+        <h:outputStylesheet>
+            <![CDATA[
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+                body {
+                    font-family: Arial, sans-serif;
+                    line-height: 1.6;
+                    background-color: #f5f5f5;
+                }
+                .header {
+                    background-color: white;
+                    padding: 15px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                }
+                .main-nav {
+                    background-color: #333;
+                    color: white;
+                    padding: 10px;
+                }
+                .main-nav .ui-menuitem-text {
+                    color: white !important;
+                }
+                .search-btn, .image-search-btn, .cta-button {
+                    background-color: #ff6a00 !important;
+                    color: white !important;
+                    border: none !important;
+                }
+                .services-section {
+                    display: grid;
+                    grid-template-columns: repeat(6, 1fr);
+                    gap: 15px;
+                    padding: 30px;
+                    background-color: white;
+                }
+                .categories-grid {
+                    display: grid;
+                    grid-template-columns: repeat(5, 1fr);
+                    gap: 15px;
+                }
+                .products-grid {
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 15px;
+                }
+                .footer {
+                    background-color: #333;
+                    color: white;
+                    padding: 30px;
+                }
+                .footer-grid {
+                    display: grid;
+                    grid-template-columns: repeat(6, 1fr);
+                    gap: 15px;
+                }
+            ]]>
+        </h:outputStylesheet>
+    </h:head>
+    <h:body>
+        <!-- Header -->
+        <h:form styleClass="header">
+            <p:graphicImage name="placeholder-logo.jpg" styleClass="logo" style="max-width: 200px;" />
+
+            <h:panelGroup layout="block" styleClass="search-container" style="display: flex; width: 50%;">
+                <p:selectOneMenu styleClass="search-category" style="padding: 10px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                    <f:selectItem itemLabel="Toutes les Catégories" itemValue="all" />
+                    <f:selectItem itemLabel="Électronique" itemValue="electronics" />
+                    <f:selectItem itemLabel="Mode" itemValue="fashion" />
+                    <f:selectItem itemLabel="Maison & Jardin" itemValue="home" />
+                    <f:selectItem itemLabel="Industrie" itemValue="industry" />
+                </p:selectOneMenu>
+                <p:inputText placeholder="Rechercher des produits, fournisseurs..." styleClass="search-input" style="flex-grow: 1; padding: 10px; border: 1px solid #ddd;" />
+                <p:commandButton value="🔍" styleClass="search-btn" action="#{searchBean.search}" />
+                <p:commandButton value="📷" styleClass="image-search-btn" />
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" styleClass="user-menu" style="display: flex; align-items: center;">
+                <p:commandLink value="Connexion" style="margin: 0 10px; text-decoration: none; color: #333;" />
+                <p:commandLink value="S'inscrire" style="margin: 0 10px; text-decoration: none; color: #333;" />
+                <p:commandLink value="Mon Alibaba" style="margin: 0 10px; text-decoration: none; color: #333;" />
+                <p:commandLink value="Panier" style="margin: 0 10px; text-decoration: none; color: #333;">
+                    <p:outputLabel value="3" styleClass="cart-badge" style="background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.8em;" />
+                </p:commandLink>
+                <p:commandLink value="Notifications" style="margin: 0 10px; text-decoration: none; color: #333;">
+                    <p:outputLabel value="2" styleClass="notif-badge" style="background-color: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.8em;" />
+                </p:commandLink>
+                <p:commandLink value="Aide" style="margin: 0 10px; text-decoration: none; color: #333;" />
+            </h:panelGroup>
+        </h:form>
+
+        <!-- Main Navigation -->
+        <p:menubar styleClass="main-nav">
+            <p:menuitem value="Toutes les Catégories" url="#" />
+            <p:menuitem value="Demande de Devis" url="#" />
+            <p:menuitem value="Prêt à Expédier" url="#" />
+            <p:menuitem value="Assurance Commerciale" url="#" />
+            <p:menuitem value="Salons Commerciaux" url="#" />
+        </p:menubar>
+
+        <!-- Main Banner -->
+        <p:panel styleClass="main-banner" style="position: relative; width: 100%; overflow: hidden;">
+            <p:graphicImage name="placeholder-banner.jpg" styleClass="banner-image" style="width: 100%; max-height: 500px; object-fit: cover;" />
+            <h:panelGroup layout="block" styleClass="banner-content" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white;">
+                <h2 styleClass="banner-title" style="font-size: 2.5rem; margin-bottom: 15px;">Sourcing Global Simplifié</h2>
+                <p styleClass="banner-desc" style="font-size: 1.2rem; margin-bottom: 15px;">Connectez-vous avec des millions de fournisseurs dans le monde</p>
+                <p:commandButton value="Acheter Maintenant" styleClass="cta-button" style="padding: 10px 20px; border-radius: 5px;" />
+            </h:panelGroup>
+        </p:panel>
+
+        <!-- Services Section -->
+        <p:panel styleClass="services-section">
+            <p:dataGrid var="service" value="#{serviceBean.services}" columns="6" styleClass="services-grid">
+                <p:column>
+                    <p:graphicImage name="placeholder-icon.jpg" styleClass="service-icon" style="max-width: 80px; margin-bottom: 10px;" />
+                    <h:outputText value="#{service.title}" style="font-weight: bold;" />
+                    <h:outputText value="#{service.description}" />
+                </p:column>
+            </p:dataGrid>
+        </p:panel>
+
+        <!-- Categories Section -->
+        <p:panel styleClass="categories-section" header="Catégories Populaires" style="padding: 30px; background-color: #f5f5f5;">
+            <p:dataGrid var="category" value="#{categoryBean.categories}" columns="5" styleClass="categories-grid">
+                <p:column>
+                    <p:graphicImage name="placeholder-category.jpg" styleClass="category-image" style="max-width: 150px;" />
+                    <h:outputText value="#{category.name}" style="font-weight: bold;" />
+                </p:column>
+            </p:dataGrid>
+        </p:panel>
+
+        <!-- Products Section -->
+        <p:panel styleClass="products-section" header="Produits Recommandés" style="padding: 30px; background-color: white;">
+            <p:dataGrid var="product" value="#{productBean.products}" columns="4" styleClass="products-grid">
+                <p:column>
+                    <p:graphicImage name="placeholder-product.jpg" styleClass="product-image" style="max-width: 200px;" />
+                    <h:outputText value="#{product.name}" style="font-weight: bold;" />
+                    <h:outputText value="#{product.price}" />
+                    <h:outputText value="Par #{product.supplier}" />
+                    <p:commandButton value="Contacter le Fournisseur" action="#{productBean.contactSupplier(product)}" />
+                    <p:commandButton value="Ajouter au Panier" action="#{cartBean.addToCart(product)}" />
+                </p:column>
+            </p:dataGrid>
+        </p:panel>
+
+        <!-- Footer -->
+        <p:panel styleClass="footer">
+            <p:dataGrid var="footerColumn" value="#{footerBean.footerColumns}" columns="6" styleClass="footer-grid">
+                <p:column>
+                    <h:outputText value="#{footerColumn.title}" styleClass="footer-title" style="font-weight: bold; margin-bottom: 15px;" />
+                    <p:menu>
+                        <p:submenu>
+                            <c:forEach items="#{footerColumn.links}" var="link">
+                                <p:menuitem value="#{link.label}" url="#{link.url}" style="color: #ddd;" />
+                            </c:forEach>
+                        </p:submenu>
+                    </p:menu>
+                </p:column>
+            </p:dataGrid>
+            <h:panelGroup layout="block" styleClass="footer-bottom" style="margin-top: 30px; text-align: center;">
+                <h:outputText value="© 2025 Alibaba.com. Tous droits réservés." />
+            </h:panelGroup>
+        </p:panel>
+    </h:body>
+</html>

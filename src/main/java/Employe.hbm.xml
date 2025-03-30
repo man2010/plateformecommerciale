@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 24 mars 2025, 00:24:48 by Hibernate Tools 6.5.1.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="gestion.Employe" optimistic-lock="none" schema="public" table="employe">
+        <id name="idemploye" type="int">
+            <column name="idemploye"/>
+            <generator class="assigned"/>
+        </id>
+        <many-to-one class="gestion.Contrat" fetch="select" name="contrat">
+            <column name="idcontrat"/>
+        </many-to-one>
+        <many-to-one class="gestion.Patronboutique" fetch="select" name="patronboutique">
+            <column name="idpatron"/>
+        </many-to-one>
+        <many-to-one class="gestion.Poste" fetch="select" name="poste">
+            <column name="idposte"/>
+        </many-to-one>
+        <property name="poste_1" type="java.lang.Integer">
+            <column name="poste"/>
+        </property>
+        <property name="dateembauche" type="date">
+            <column length="13" name="dateembauche"/>
+        </property>
+        <property name="contrat_1" type="java.lang.Integer">
+            <column name="contrat"/>
+        </property>
+        <property name="salaire" type="java.lang.Integer">
+            <column name="salaire"/>
+        </property>
+        <property name="statutemploye" type="java.lang.Integer">
+            <column name="statutemploye"/>
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="horairetravails" table="horaireemployee">
+            <key>
+                <column name="idemploye" not-null="true"/>
+            </key>
+            <many-to-many entity-name="gestion.Horairetravail">
+                <column name="idht" not-null="true"/>
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

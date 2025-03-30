@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Alibaba.com - Réplique Ultra-Complète</title>
+    <h:outputStylesheet name="style.css" />
+</h:head>
+<h:body>
+    <!-- En-tête -->
+    <p:panel id="header" styleClass="alibaba-header">
+        <h:form id="headerForm">
+            <p:panelGrid columns="3" styleClass="header-grid">
+                <!-- Logo -->
+                <p:commandLink action="index.xhtml" styleClass="logo-link">
+                    <p:graphicImage name="images/alibaba-logo.png" styleClass="logo" />
+                </p:commandLink>
+
+                <!-- Barre de recherche -->
+                <p:panel styleClass="search-bar-panel">
+                    <p:selectOneMenu value="categoryFilter" styleClass="search-filter">
+                        <f:selectItem itemLabel="All Categories" itemValue="all" />
+                        <f:selectItem itemLabel="Electronics" itemValue="electronics" />
+                        <f:selectItem itemLabel="Apparel" itemValue="apparel" />
+                    </p:selectOneMenu>
+                    <p:autoComplete value="searchQuery" completeMethod="completeQuery" 
+                                    placeholder="Search products, suppliers, or keywords..." 
+                                    styleClass="search-input" minQueryLength="2" />
+                    <p:commandButton icon="pi pi-search" styleClass="search-button" />
+                    <p:commandButton icon="pi pi-camera" title="Search by Image" styleClass="image-search-button" />
+                </p:panel>
+
+                <!-- Menu utilisateur -->
+                <p:menubar styleClass="user-menu">
+                    <p:submenu label="My Alibaba" icon="pi pi-user">
+                        <p:menuitem value="Sign In" url="#" />
+                        <p:menuitem value="Join Free" url="#" />
+                        <p:menuitem value="My Orders" url="#" />
+                        <p:menuitem value="Messages" url="#" />
+                        <p:menuitem value="Favorites" url="#" />
+                        <p:menuitem value="Account Settings" url="#" />
+                    </p:submenu>
+                    <p:menuitem value="Cart" icon="pi pi-shopping-cart" url="#">
+                        <f:facet name="badge">
+                            <p:outputLabel value="3" styleClass="cart-badge" />
+                        </f:facet>
+                    </p:menuitem>
+                    <p:submenu label="Language / Region" icon="pi pi-globe">
+                        <p:menuitem value="English - Global" url="#" />
+                        <p:menuitem value="Français - France" url="#" />
+                        <p:menuitem value="Español - España" url="#" />
+                        <p:menuitem value="中文 - 中国" url="#" />
+                    </p:submenu>
+                    <p:menuitem value="Buyer Central" url="#" />
+                    <p:menuitem value="Supplier Central" url="#" />
+                    <p:menuitem value="Help" icon="pi pi-question-circle" url="#" />
+                    <p:menuitem value="Get the App" icon="pi pi-mobile" url="#" />
+                    <p:menuitem value="Notifications" icon="pi pi-bell" url="#">
+                        <f:facet name="badge">
+                            <p:outputLabel value="2" styleClass="notif-badge" />
+                        </f:facet>
+                    </p:menuitem>
+                </p:menubar>
+            </p:panelGrid>
+        </h:form>
+    </p:panel>
+
+    <!-- Navigation principale -->
+    <p:menubar styleClass="main-nav">
+        <p:submenu label="All Categories" icon="pi pi-list">
+            <p:submenu label="Consumer Electronics">
+                <p:menuitem value="Mobile Phones - Accessories" url="#" />
+                <p:menuitem value="LED TVs - Displays" url="#" />
+                <p:menuitem value="Audio - Video" url="#" />
+            </p:submenu>
+            <p:submenu label="Apparel">
+                <p:menuitem value="Men's Clothing" url="#" />
+                <p:menuitem value="Women's Clothing" url="#" />
+                <p:menuitem value="Kids' Clothing" url="#" />
+            </p:submenu>
+            <p:submenu label="Machinery">
+                <p:menuitem value="Industrial Machinery" url="#" />
+                <p:menuitem value="Agricultural Machinery" url="#" />
+            </p:submenu>
+            <p:submenu label="Home - Garden">
+                <p:menuitem value="Furniture" url="#" />
+                <p:menuitem value="Kitchenware" url="#" />
+            </p:submenu>
+            <p:menuitem value="View All Categories" url="#" />
+        </p:submenu>
+        <p:menuitem value="Request for Quotation" icon="pi pi-file" url="#" />
+        <p:menuitem value="Ready to Ship" icon="pi pi-truck" url="#" />
+        <p:menuitem value="Trade Assurance" icon="pi pi-shield" url="#" />
+        <p:menuitem value="Trade Shows" icon="pi pi-calendar" url="#" />
+        <p:menuitem value="Sourcing Solutions" icon="pi pi-search-plus" url="#" />
+    </p:menubar>
+
+    <!-- Bannière principale -->
+    <p:carousel numVisible="1" circular="true" autoPlayInterval="4000" effect="fade" styleClass="main-banner" 
+            responsive="true" showNavigators="true" showIndicators="true">
+    <div>
+        <p:panel styleClass="banner-item">
+            <p:graphicImage name="images/banner1.jpg" styleClass="banner-image" />
+            <h:outputText value="Sourcing Global Simplifié" styleClass="banner-title" />
+            <p:outputLabel value="Connectez-vous avec des millions de fournisseurs dans le monde." styleClass="banner-desc" />
+            <p:commandButton value="Acheter Maintenant" styleClass="cta-button" />
+            <p:outputLabel value="Offre Limitée" styleClass="banner-badge" />
+        </p:panel>
+    </div>
+    <div>
+        <p:panel styleClass="banner-item">
+            <p:graphicImage name="images/banner2.jpg" styleClass="banner-image" />
+            <h:outputText value="Solutions de Livraison Rapide" styleClass="banner-title" />
+            <p:outputLabel value="Recevez vos commandes en quelques jours." styleClass="banner-desc" />
+            <p:commandButton value="En Savoir Plus" styleClass="cta-button" />
+        </p:panel>
+    </div>
+    <div>
+        <p:panel styleClass="banner-item">
+            <p:graphicImage name="images/banner3.jpg" styleClass="banner-image" />
+            <h:outputText value="Deals Assurance Commerciale" styleClass="banner-title" />
+            <p:outputLabel value="Transactions sécurisées avec des fournisseurs vérifiés." styleClass="banner-desc" />
+            <p:commandButton value="Explorer Maintenant" styleClass="cta-button" />
+        </p:panel>
+    </div>
+</p:carousel>
+<!--     <p:carousel numVisible="1" circular="true" autoPlayInterval="4000" effect="fade" styleClass="main-banner"  -->
+<!--                 responsive="true" showNavigators="true" showIndicators="true"> -->
+<!--         <p:carouselItem> -->
+<!--             <p:panel styleClass="banner-item"> -->
+<!--                 <p:graphicImage name="images/banner1.jpg" styleClass="banner-image" /> -->
+<!--                 <h:outputText value="Global Sourcing Made Easy" styleClass="banner-title" /> -->
+<!--                 <p:outputLabel value="Connect with millions of suppliers worldwide." styleClass="banner-desc" /> -->
+<!--                 <p:commandButton value="Shop Now" styleClass="cta-button" /> -->
+<!--                 <p:outputLabel value="Limited Offer" styleClass="banner-badge" /> -->
+<!--             </p:panel> -->
+<!--         </p:carouselItem> -->
+<!--         <p:carouselItem> -->
+<!--             <p:panel styleClass="banner-item"> -->
+<!--                 <p:graphicImage name="images/banner2.jpg" styleClass="banner-image" /> -->
+<!--                 <h:outputText value="Fast Shipping Solutions" styleClass="banner-title" /> -->
+<!--                 <p:outputLabel value="Get your orders delivered in days." styleClass="banner-desc" /> -->
+<!--                 <p:commandButton value="Learn More" styleClass="cta-button" /> -->
+<!--             </p:panel> -->
+<!--         </p:carouselItem> -->
+<!--         <p:carouselItem> -->
+<!--             <p:panel styleClass="banner-item"> -->
+<!--                 <p:graphicImage name="images/banner3.jpg" styleClass="banner-image" /> -->
+<!--                 <h:outputText value="Trade Assurance Deals" styleClass="banner-title" /> -->
+<!--                 <p:outputLabel value="Secure transactions with verified suppliers." styleClass="banner-desc" /> -->
+<!--                 <p:commandButton value="Explore Now" styleClass="cta-button" /> -->
+<!--             </p:panel> -->
+<!--         </p:carouselItem> -->
+<!--     </p:carousel> -->
+
+    <!-- Section des services rapides -->
+    <p:panel header="Your Business Solutions" styleClass="services-section">
+        <p:panelGrid columns="6" styleClass="services-grid">
+            <p:column>
+                <p:graphicImage name="images/sourcing-icon.png" styleClass="service-icon" />
+                <h:outputText value="Sourcing Solutions" styleClass="service-title" />
+                <p:outputLabel value="Find reliable suppliers." styleClass="service-desc" />
+            </p:column>
+            <p:column>
+                <p:graphicImage name="images/logistics-icon.png" styleClass="service-icon" />
+                <h:outputText value="Logistics Services" styleClass="service-title" />
+                <p:outputLabel value="Fast global shipping." styleClass="service-desc" />
+            </p:column>
+            <p:column>
+                <p:graphicImage name="images/payment-icon.png" styleClass="service-icon" />
+                <h:outputText value="Secure Payment" styleClass="service-title" />
+                <p:outputLabel value="Safe transactions." styleClass="service-desc" />
+            </p:column>
+            <p:column>
+                <p:graphicImage name="images/inspection-icon.png" styleClass="service-icon" />
+                <h:outputText value="Inspection Services" styleClass="service-title" />
+                <p:outputLabel value="Quality guaranteed." styleClass="service-desc" />
+            </p:column>
+            <p:column>
+                <p:graphicImage name="images/assurance-icon.png" styleClass="service-icon" />
+                <h:outputText value="Trade Assurance" styleClass="service-title" />
+                <p:outputLabel value="Protected orders." styleClass="service-desc" />
+            </p:column>
+            <p:column>
+                <p:graphicImage name="images/customs-icon.png" styleClass="service-icon" />
+                <h:outputText value="Customs Services" styleClass="service-title" />
+                <p:outputLabel value="Hassle-free clearance." styleClass="service-desc" />
+            </p:column>
+        </p:panelGrid>
+    </p:panel>
+
+    <!-- Section des catégories populaires -->
+    <p:panel header="Popular Categories" styleClass="categories-section">
+        <p:dataGrid var="category" value="categories" columns="5" rows="20" paginator="true" 
+                    paginatorPosition="bottom" styleClass="categories-grid">
+            <p:column>
+                <p:panel styleClass="category-item">
+                    <p:graphicImage name="images/#{category.image}" styleClass="category-image" />
+                    <h:outputText value="#{category.name}" styleClass="category-name" />
+                    <p:menu overlay="true" trigger="categoryTrigger_#{category.id}" styleClass="category-menu">
+                        <p:submenu label="Subcategories">
+                            <p:menuitem value="Subcat 1" url="#" />
+                            <p:menuitem value="Subcat 2" url="#" />
+                        </p:submenu>
+                    </p:menu>
+                    <p:commandLink id="categoryTrigger_#{category.id}" styleClass="category-trigger" />
+                </p:panel>
+            </p:column>
+        </p:dataGrid>
+        <p:commandButton value="View All Categories" styleClass="view-all-button" />
+    </p:panel>
+
+    <!-- Section des produits recommandés -->
+    <p:panel header="Recommended Products" styleClass="products-section">
+        <p:toolbar styleClass="products-toolbar">
+            <p:toolbarGroup align="left">
+                <p:selectOneMenu value="productFilter">
+                    <f:selectItem itemLabel="Top Ranked" itemValue="top" />
+                    <f:selectItem itemLabel="New Arrivals" itemValue="new" />
+                    <f:selectItem itemLabel="Price Low to High" itemValue="priceAsc" />
+                    <f:selectItem itemLabel="Min Order" itemValue="minOrder" />
+                    <p:ajax update="productGrid" />
+                </p:selectOneMenu>
+            </p:toolbarGroup>
+        </p:toolbar>
+        <p:dataGrid id="productGrid" var="product" value="products" columns="4" rows="16" 
+                    paginator="true" paginatorPosition="bottom" styleClass="products-grid">
+            <p:column>
+                <p:panel styleClass="product-item">
+                    <p:graphicImage name="images/#{product.image}" styleClass="product-image" />
+                    <h:outputText value="#{product.name}" styleClass="product-name" />
+                    <p:outputLabel value="#{product.price}" styleClass="product-price" />
+                    <p:outputLabel value="By #{product.supplier}" styleClass="product-supplier" />
+                    <p:outputLabel value="Verified" styleClass="product-badge" rendered="#{product.verified}" />
+                    <p:commandButton value="Contact Supplier" styleClass="contact-button" />
+                    <p:commandButton value="Add to Cart" icon="pi pi-plus" styleClass="cart-button" />
+                </p:panel>
+            </p:column>
+        </p:dataGrid>
+    </p:panel>
+
+    <!-- Section des tendances -->
+    <p:panel header="Trending Now" styleClass="trends-section">
+	    <p:carousel numVisible="4" responsive="true" circular="true" styleClass="trends-carousel">
+		    <div>
+		        <p:panel styleClass="trend-item">
+		            <p:graphicImage name="images/trend1.jpg" styleClass="trend-image" />
+		            <h:outputText value="Montre Intelligente" styleClass="trend-name" />
+		            <p:outputLabel value="49,99 €" styleClass="trend-price" />
+		            <p:outputLabel value="Tendance" styleClass="trend-badge" />
+		        </p:panel>
+		    </div>
+		    <div>
+		        <p:panel styleClass="trend-item">
+		            <p:graphicImage name="images/trend2.jpg" styleClass="trend-image" />
+		            <h:outputText value="Enceinte Bluetooth" styleClass="trend-name" />
+		            <p:outputLabel value="29,99 €" styleClass="trend-price" />
+		            <p:outputLabel value="Tendance" styleClass="trend-badge" />
+		        </p:panel>
+		    </div>
+	    <!-- Ajouter plus d'éléments ici -->
+	    </p:carousel>
+<!--         <p:carousel numVisible="4" responsive="true" circular="true" styleClass="trends-carousel"> -->
+<!--             <p:carouselItem> -->
+<!--                 <p:panel styleClass="trend-item"> -->
+<!--                     <p:graphicImage name="images/trend1.jpg" styleClass="trend-image" /> -->
+<!--                     <h:outputText value="Smartwatch" styleClass="trend-name" /> -->
+<!--                     <p:outputLabel value="$49.99" styleClass="trend-price" /> -->
+<!--                     <p:outputLabel value="Trending" styleClass="trend-badge" /> -->
+<!--                 </p:panel> -->
+<!--             </p:carouselItem> -->
+<!--             <p:carouselItem> -->
+<!--                 <p:panel styleClass="trend-item"> -->
+<!--                     <p:graphicImage name="images/trend2.jpg" styleClass="trend-image" /> -->
+<!--                     <h:outputText value="Bluetooth Speaker" styleClass="trend-name" /> -->
+<!--                     <p:outputLabel value="$29.99" styleClass="trend-price" /> -->
+<!--                     <p:outputLabel value="Trending" styleClass="trend-badge" /> -->
+<!--                 </p:panel> -->
+<!--             </p:carouselItem> -->
+<!--             Ajouter plus d'items ici -->
+<!--         </p:carousel> -->
+        <p:commandButton value="See More Trends" styleClass="view-all-button" />
+    </p:panel>
+
+    <!-- Section des offres spéciales -->
+    <p:panel header="Limited Time Offers" styleClass="offers-section">
+        <p:dataGrid var="offer" value="offers" columns="3" rows="6" styleClass="offers-grid">
+            <p:column>
+                <p:panel styleClass="offer-item">
+                    <p:graphicImage name="images/#{offer.image}" styleClass="offer-image" />
+                    <h:outputText value="#{offer.name}" styleClass="offer-name" />
+                    <p:outputLabel value="#{offer.price}" styleClass="offer-price" />
+                    <p:outputLabel value="Was #{offer.oldPrice}" styleClass="offer-old-price" />
+                    <p:countdown value="#{offer.expiry}" format="dd:hh:mm:ss" styleClass="offer-countdown" />
+                    <p:commandButton value="Buy Now" styleClass="cta-button" />
+                    <p:outputLabel value="Limited Time" styleClass="offer-badge" />
+                </p:panel>
+            </p:column>
+        </p:dataGrid>
+    </p:panel>
+
+    <!-- Section des fournisseurs vedettes -->
+    <p:panel header="Featured Suppliers" styleClass="suppliers-section">
+        <p:dataGrid var="supplier" value="suppliers" columns="4" rows="4" styleClass="suppliers-grid">
+            <p:column>
+                <p:panel styleClass="supplier-item">
+                    <p:graphicImage name="images/#{supplier.logo}" styleClass="supplier-logo" />
+                    <h:outputText value="#{supplier.name}" styleClass="supplier-name" />
+                    <p:outputLabel value="#{supplier.specialty}" styleClass="supplier-specialty" />
+                    <p:commandButton value="Visit Store" styleClass="visit-button" />
+                </p:panel>
+            </p:column>
+        </p:dataGrid>
+    </p:panel>
+
+    <!-- Section des outils et ressources -->
+    <p:panel header="Tools - Resources" styleClass="resources-section">
+        <p:panelGrid columns="4" styleClass="resources-grid">
+            <p:column>
+                <h:outputText value="Trade Intelligence" styleClass="resource-title" />
+                <p:outputLabel value="Market data and insights." styleClass="resource-desc" />
+                <p:commandLink value="Learn More" url="#" />
+            </p:column>
+            <p:column>
+                <h:outputText value="Marketplace Insights" styleClass="resource-title" />
+                <p:outputLabel value="Trends and analytics." styleClass="resource-desc" />
+                <p:commandLink value="Learn More" url="#" />
+            </p:column>
+            <p:column>
+                <h:outputText value="Learning Center" styleClass="resource-title" />
+                <p:outputLabel value="Guides and tutorials." styleClass="resource-desc" />
+                <p:commandLink value="Learn More" url="#" />
+            </p:column>
+            <p:column>
+                <h:outputText value="Success Stories" styleClass="resource-title" />
+                <p:outputLabel value="Inspiration from peers." styleClass="resource-desc" />
+                <p:commandLink value="Learn More" url="#" />
+            </p:column>
+        </p:panelGrid>
+    </p:panel>
+
+    <!-- Bannières secondaires -->
+    <p:panel styleClass="secondary-banners">
+        <p:panelGrid columns="2" styleClass="banners-grid">
+            <p:column>
+                <p:graphicImage name="images/secondary-banner1.jpg" styleClass="secondary-banner-image" />
+                <p:commandButton value="Discover Deals" styleClass="cta-button" />
+            </p:column>
+            <p:column>
+                <p:graphicImage name="images/secondary-banner2.jpg" styleClass="secondary-banner-image" />
+                <p:commandButton value="Join Now" styleClass="cta-button" />
+            </p:column>
+        </p:panelGrid>
+    </p:panel>
+
+    <!-- Pied de page -->
+    <p:panel id="footer" styleClass="alibaba-footer">
+        <p:panelGrid columns="6" styleClass="footer-grid">
+            <p:column>
+                <h:outputText value="About Alibaba.com" styleClass="footer-title" />
+                <p:menuitem value="Company Overview" url="#" />
+                <p:menuitem value="Contact Us" url="#" />
+                <p:menuitem value="Careers" url="#" />
+                <p:menuitem value="Press Center" url="#" />
+            </p:column>
+            <p:column>
+                <h:outputText value="Customer Service" styleClass="footer-title" />
+                <p:menuitem value="Help Center" url="#" />
+                <p:menuitem value="Submit a Dispute" url="#" />
+                <p:menuitem value="Report IPR Violation" url="#" />
+                <p:menuitem value="Buyer Protection" url="#" />
+            </p:column>
+            <p:column>
+                <h:outputText value="Policies - Rules" styleClass="footer-title" />
+                <p:menuitem value="Terms of Use" url="#" />
+                <p:menuitem value="Privacy Policy" url="#" />
+                <p:menuitem value="Cookie Policy" url="#" />
+                <p:menuitem value="Community Standards" url="#" />
+            </p:column>
+            <p:column>
+                <h:outputText value="Tools - Apps" styleClass="footer-title" />
+                <p:menuitem value="Trade Manager" url="#" />
+                <p:menuitem value="Mobile App" url="#" />
+                <p:menuitem value="API Services" url="#" />
+                <p:menuitem value="Sourcing Reports" url="#" />
+            </p:column>
+            <p:column>
+                <h:outputText value="Partner Program" styleClass="footer-title" />
+                <p:menuitem value="Become a Supplier" url="#" />
+                <p:menuitem value="Affiliate Program" url="#" />
+                <p:menuitem value="Trade Assurance" url="#" />
+                <p:menuitem value="Logistics Partners" url="#" />
+            </p:column>
+            <p:column>
+                <h:outputText value="Connect" styleClass="footer-title" />
+                <p:graphicImage name="images/facebook-icon.png" styleClass="social-icon" />
+                <p:graphicImage name="images/twitter-icon.png" styleClass="social-icon" />
+                <p:graphicImage name="images/linkedin-icon.png" styleClass="social-icon" />
+                <p:graphicImage name="images/youtube-icon.png" styleClass="social-icon" />
+                <p:graphicImage name="images/instagram-icon.png" styleClass="social-icon" />
+                <p:selectOneMenu value="region">
+                    <f:selectItem itemLabel="Global - English" itemValue="global" />
+                    <f:selectItem itemLabel="France - Français" itemValue="france" />
+                    <f:selectItem itemLabel="Spain - Español" itemValue="spain" />
+                    <f:selectItem itemLabel="China - 中文" itemValue="china" />
+                    <f:selectItem itemLabel="Germany - Deutsch" itemValue="germany" />
+                </p:selectOneMenu>
+            </p:column>
+        </p:panelGrid>
+        <p:separator />
+        <p:panelGrid columns="2" styleClass="footer-bottom">
+            <p:column>
+                <p:outputLabel value="© 2025 Alibaba.com. All rights reserved." styleClass="footer-copyright" />
+            </p:column>
+            <p:column>
+                <p:graphicImage name="images/iso-cert.png" styleClass="cert-icon" />
+                <p:graphicImage name="images/verified-supplier.png" styleClass="cert-icon" />
+                <p:menuitem value="Sitemap" url="#" styleClass="sitemap-link" />
+            </p:column>
+        </p:panelGrid>
+    </p:panel>
+</h:body>
+</html>

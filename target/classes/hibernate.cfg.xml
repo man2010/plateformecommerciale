@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.password">ouza</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/GesCom</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.hbm2ddl.auto">none</property>
+        <property name="hibernate.search.autoregister_listeners">true</property>
+        <property name="hibernate.validator.apply_to_ddl">false</property>
+        <mapping resource="gestion/Permission.hbm.xml"/>
+        <mapping resource="gestion/Augmentationsalaire.hbm.xml"/>
+        <mapping resource="gestion/Typecollaborateur.hbm.xml"/>
+        <mapping resource="gestion/Patronboutique.hbm.xml"/>
+        <mapping resource="gestion/Notifications.hbm.xml"/>
+        <mapping resource="gestion/Preference.hbm.xml"/>
+        <mapping resource="gestion/Typeconge.hbm.xml"/>
+        <mapping resource="gestion/Typeutilisateur.hbm.xml"/>
+        <mapping resource="gestion/Varietesalaire.hbm.xml"/>
+        <mapping resource="gestion/Pays.hbm.xml"/>
+        <mapping resource="gestion/Contrat.hbm.xml"/>
+        <mapping resource="gestion/Session.hbm.xml"/>
+        <mapping resource="gestion/Horairetravail.hbm.xml"/>
+        <mapping resource="gestion/Employe.hbm.xml"/>
+        <mapping resource="gestion/Villes.hbm.xml"/>
+        <mapping resource="gestion/Salaire.hbm.xml"/>
+        <mapping resource="gestion/Compteutilisateur.hbm.xml"/>
+        <mapping resource="gestion/Motif.hbm.xml"/>
+        <mapping resource="gestion/Profile.hbm.xml"/>
+        <mapping resource="gestion/Conge.hbm.xml"/>
+        <mapping resource="gestion/Poste.hbm.xml"/>
+        <mapping resource="gestion/Client.hbm.xml"/>
+        <mapping resource="gestion/Typecontrat.hbm.xml"/>
+        <mapping resource="gestion/Collaborateur.hbm.xml"/>
+        <mapping resource="gestion/Utilisateur.hbm.xml"/>
+        <mapping resource="gestion/Journalactivite.hbm.xml"/>
+        <mapping resource="gestion/Role.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>
