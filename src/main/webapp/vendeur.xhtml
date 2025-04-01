@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+    <title>Création de Boutique et Produits</title>
+    <style>
+        .form-container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .form-title {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+        .step.active {
+            background: #3498db;
+            color: white;
+        }
+        .step.completed {
+            background: #2ecc71;
+            color: white;
+        }
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .product-image-preview {
+            max-width: 150px;
+            max-height: 150px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+        }
+        .dynamic-field {
+            margin-bottom: 15px;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="form-container">
+        <h:form id="sellerForm">
+            <p:wizard widgetVar="wiz" flowListener="#{sellerWizard.onFlowProcess}">
+                
+                <!-- Étape 1: Informations de la boutique -->
+                <p:tab title="Boutique">
+                    <div class="form-title">Informations de votre boutique</div>
+                    
+                    <div class="ui-g">
+                        <div class="ui-g-6">
+                            <p:outputLabel for="shopName" value="Nom de la boutique *" />
+                            <p:inputText id="shopName" value="#{sellerWizard.shop.name}" required="true" style="width:100%"/>
+                        </div>
+                        <div class="ui-g-6">
+                            <p:outputLabel for="shopType" value="Type de boutique *" />
+                            <p:selectOneMenu id="shopType" value="#{sellerWizard.shop.type}" style="width:100%">
+                                <f:selectItem itemLabel="Sélectionnez" itemValue="" />
+                                <f:selectItem itemLabel="Prêt-à-porter" itemValue="fashion" />
+                                <f:selectItem itemLabel="Électronique" itemValue="electronics" />
+                                <f:selectItem itemLabel="Alimentation" itemValue="food" />
+                                <f:selectItem itemLabel="Autre" itemValue="other" />
+                            </p:selectOneMenu>
+                        </div>
+                    </div>
+                    
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <p:outputLabel for="shopDescription" value="Description *" />
+                            <p:inputTextarea id="shopDescription" value="#{sellerWizard.shop.description}" rows="5" style="width:100%"/>
+                        </div>
+                    </div>
+                    
+                    <div class="ui-g">
+                        <div class="ui-g-6">
+                            <p:outputLabel for="shopEmail" value="Email de contact *" />
+                            <p:inputText id="shopEmail" value="#{sellerWizard.shop.email}" required="true" style="width:100%"/>
+                        </div>
+                        <div class="ui-g-6">
+                            <p:outputLabel for="shopPhone" value="Téléphone *" />
+                            <p:inputText id="shopPhone" value="#{sellerWizard.shop.phone}" required="true" style="width:100%"/>
+                        </div>
+                    </div>
+                    
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <p:outputLabel for="shopLogo" value="Logo de la boutique" />
+                            <p:fileUpload id="shopLogo" value="#{sellerWizard.uploadedFile}" mode="advanced" 
+                                       allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                       update="logoPreview" auto="true"/>
+                            <p:graphicImage id="logoPreview" value="#{sellerWizard.shop.logoPath}" 
+                                         styleClass="product-image-preview" rendered="#{not empty sellerWizard.shop.logoPath}"/>
+                        </div>
+                    </div>
+                </p:tab>
+                
+                <!-- Étape 2: Informations sur les produits -->
+                <p:tab title="Produits">
+                    <div class="form-title">Ajoutez vos produits</div>
+                    
+                    <p:dataList value="#{sellerWizard.products}" var="product" type="ordered">
+                        <div class="ui-g">
+                            <div class="ui-g-4">
+                                <p:outputLabel value="Nom du produit *" />
+                                <p:inputText value="#{product.name}" required="true" style="width:100%"/>
+                            </div>
+                            <div class="ui-g-4">
+                                <p:outputLabel value="Référence *" />
+                                <p:inputText value="#{product.reference}" required="true" style="width:100%"/>
+                            </div>
+                            <div class="ui-g-4">
+                                <p:outputLabel value="Code produit *" />
+                                <p:inputText value="#{product.code}" required="true" style="width:100%"/>
+                            </div>
+                        </div>
+                        
+                        <div class="ui-g">
+                            <div class="ui-g-12">
+                                <p:outputLabel value="Description" />
+                                <p:inputTextarea value="#{product.description}" rows="3" style="width:100%"/>
+                            </div>
+                        </div>
+                        
+                        <div class="ui-g">
+                            <div class="ui-g-3">
+                                <p:outputLabel value="Prix d'achat *" />
+                                <p:inputNumber value="#{product.purchasePrice}" required="true" style="width:100%"/>
+                            </div>
+                            <div class="ui-g-3">
+                                <p:outputLabel value="Prix de vente *" />
+                                <p:inputNumber value="#{product.sellingPrice}" required="true" style="width:100%"/>
+                            </div>
+                            <div class="ui-g-3">
+                                <p:outputLabel value="Quantité en stock *" />
+                                <p:inputNumber value="#{product.quantity}" required="true" style="width:100%"/>
+                            </div>
+                            <div class="ui-g-3">
+                                <p:outputLabel value="Catégorie *" />
+                                <p:selectOneMenu value="#{product.category}" style="width:100%">
+                                    <f:selectItem itemLabel="Sélectionnez" itemValue="" />
+                                    <f:selectItems value="#{sellerWizard.categories}" />
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                        
+                        <div class="ui-g">
+                            <div class="ui-g-6">
+                                <p:outputLabel value="Origine du produit" />
+                                <p:selectOneMenu value="#{product.origin}" style="width:100%">
+                                    <f:selectItem itemLabel="Sélectionnez" itemValue="" />
+                                    <f:selectItems value="#{sellerWizard.origins}" />
+                                </p:selectOneMenu>
+                            </div>
+                            <div class="ui-g-6">
+                                <p:outputLabel value="Images du produit" />
+                                <p:fileUpload value="#{product.uploadedImages}" mode="advanced" multiple="true" 
+                                           allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                            </div>
+                        </div>
+                        
+                        <div class="ui-g">
+                            <div class="ui-g-12">
+                                <p:commandButton value="Supprimer ce produit" action="#{sellerWizard.removeProduct(product)}" 
+                                               styleClass="ui-button-danger" icon="pi pi-trash"/>
+                            </div>
+                        </div>
+                        
+                        <hr style="margin: 20px 0; border-top: 1px dashed #ddd;" />
+                    </p:dataList>
+                    
+                    <p:commandButton value="Ajouter un produit" action="#{sellerWizard.addProduct}" 
+                                   styleClass="ui-button-success" icon="pi pi-plus"/>
+                </p:tab>
+                
+                <!-- Étape 3: Options de vente -->
+                <p:tab title="Options">
+                    <div class="form-title">Configuration des options de vente</div>
+                    
+                    <div class="ui-g">
+                        <div class="ui-g-6">
+                            <p:fieldset legend="Modes de paiement" toggleable="true">
+                                <p:selectManyCheckbox value="#{sellerWizard.paymentMethods}" layout="grid" columns="1">
+                                    <f:selectItem itemLabel="Carte bancaire" itemValue="credit_card" />
+                                    <f:selectItem itemLabel="PayPal" itemValue="paypal" />
+                                    <f:selectItem itemLabel="Virement bancaire" itemValue="bank_transfer" />
+                                    <f:selectItem itemLabel="À la livraison" itemValue="cash_on_delivery" />
+                                </p:selectManyCheckbox>
+                            </p:fieldset>
+                        </div>
+                        <div class="ui-g-6">
+                            <p:fieldset legend="Options de livraison" toggleable="true">
+                                <p:selectManyCheckbox value="#{sellerWizard.shippingOptions}" layout="grid" columns="1">
+                                    <f:selectItem itemLabel="Retrait en magasin" itemValue="store_pickup" />
+                                    <f:selectItem itemLabel="Livraison standard" itemValue="standard" />
+                                    <f:selectItem itemLabel="Livraison express" itemValue="express" />
+                                    <f:selectItem itemLabel="Livraison internationale" itemValue="international" />
+                                </p:selectManyCheckbox>
+                            </p:fieldset>
+                        </div>
+                    </div>
+                    
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <p:fieldset legend="Politique de retour" toggleable="true">
+                                <p:inputTextarea value="#{sellerWizard.returnPolicy}" rows="3" style="width:100%"/>
+                            </p:fieldset>
+                        </div>
+                    </div>
+                </p:tab>
+                
+                <!-- Étape 4: Confirmation -->
+                <p:tab title="Confirmation">
+                    <div class="form-title">Récapitulatif et confirmation</div>
+                    
+                    <p:panelGrid columns="2" layout="grid" style="width:100%">
+                        <f:facet name="header">
+                            <p:row>
+                                <p:column colspan="2">
+                                    <h3>Informations de la boutique</h3>
+                                </p:column>
+                            </p:row>
+                        </f:facet>
+                        
+                        <p:outputLabel value="Nom de la boutique:" />
+                        <p:outputLabel value="#{sellerWizard.shop.name}" />
+                        
+                        <p:outputLabel value="Type de boutique:" />
+                        <p:outputLabel value="#{sellerWizard.shop.type}" />
+                        
+                        <p:outputLabel value="Email de contact:" />
+                        <p:outputLabel value="#{sellerWizard.shop.email}" />
+                        
+                        <p:outputLabel value="Téléphone:" />
+                        <p:outputLabel value="#{sellerWizard.shop.phone}" />
+                    </p:panelGrid>
+                    
+                    <p:dataTable value="#{sellerWizard.products}" var="product" style="margin-top:20px">
+                        <p:column headerText="Produit">
+                            <h:outputText value="#{product.name}" />
+                        </p:column>
+                        <p:column headerText="Référence">
+                            <h:outputText value="#{product.reference}" />
+                        </p:column>
+                        <p:column headerText="Prix">
+                            <h:outputText value="#{product.sellingPrice}">
+                                <f:convertNumber type="currency" currencySymbol="€" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Quantité">
+                            <h:outputText value="#{product.quantity}" />
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <div class="ui-g" style="margin-top:30px">
+                        <div class="ui-g-12">
+                            <p:commandButton value="Soumettre" action="#{sellerWizard.submit}" 
+                                           styleClass="ui-button-primary" icon="pi pi-check"/>
+                        </div>
+                    </div>
+                </p:tab>
+            </p:wizard>
+        </h:form>
+    </div>
+</h:body>
+</html>

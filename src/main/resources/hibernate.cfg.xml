@@ -3,8 +3,8 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.password">ouza</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/GesCom</property>
+        <property name="hibernate.connection.password">mansour</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/gestioncommerciale</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <property name="hibernate.hbm2ddl.auto">none</property>
